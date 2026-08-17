@@ -19,7 +19,7 @@ const Header: React.FC = () => {
     <div className="bg-white py-2 px-0">
       <div className="container mx-auto px-0 flex justify-end items-center">
         <div className="flex items-center space-x-2">
-          <a href="#" className="text-xlys-dark hover:text-xlys-red text-sm">登录</a>
+          <a href="/admin/" className="text-xlys-dark hover:text-xlys-red text-sm">登录</a>
           <span className="text-xlys-gray">|</span>
           <a href="#" className="text-xlys-dark hover:text-xlys-red text-sm">注册</a>
         </div>
