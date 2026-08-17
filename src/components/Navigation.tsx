@@ -70,10 +70,6 @@ const Navigation: React.FC = () => {
             src="/logo.png" 
             alt="金石篆刻社" 
             className="w-full h-full object-contain"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Chinese%20seal%20engraving%20club%20logo%20red%20circular%20design%20with%20Chinese%20characters&image_size=square';
-            }}
           />
         </div>
         <img 
