@@ -1,0 +1,86 @@
+金石篆刻社官网 - 目录说明
+
+【根目录文件】
+- index.html           # 入口HTML文件（网页标题、favicon）
+- package.json         # 项目依赖配置
+- vite.config.ts       # Vite构建工具配置
+- tailwind.config.js   # Tailwind CSS配置（自定义颜色等）
+- postcss.config.js    # PostCSS配置
+- tsconfig.json        # TypeScript配置
+- 启动本地网页.bat     # 一键启动开发服务器
+- 启动生产版本.bat     # 一键构建并启动生产版本
+
+【public/ 静态资源目录】
+- favicon.svg          # 浏览器标签页图标
+- logo.png             # 社团LOGO
+- 题字.svg             # 社团名称题字
+
+【public/articles/ 文章目录】
+- 放置所有文章的Markdown文件（.md格式）
+- 文章格式要求：包含YAML Frontmatter（title, date, author等）
+- 示例：2026-06-20-社长的传承.md
+
+【public/images/ 图片目录】
+- static/              # 不变的元素图（如logo、题字、横幅背景等）
+- articles/            # 文章中使用的图片（随文章添加）
+  - 命名建议：与文章文件名对应
+
+【src/ 源代码目录】
+- main.tsx             # 应用入口文件
+- App.tsx              # 主应用组件（路由配置）
+- index.css            # 全局样式
+
+【src/components/ 组件目录】
+- Header.tsx           # 顶部黄色区域
+- Navigation.tsx       # 红色导航栏
+- Banner.tsx           # 轮播图（自动读取文章数据）
+- NewsSection.tsx      # 金石资讯（自动读取文章列表）
+- ActivityBanners.tsx  # 活动横幅（春季雅集、社庆活动等）
+- MemberNews.tsx       # 社员动态
+- AcademicResources.tsx# 学术资源
+- QuickLinks.tsx       # 快捷链接（入社申请等）
+- BottomModules.tsx    # 底部模块（视频中心、名家讲堂等）
+- HonorBadges.tsx      # 荣誉徽章
+- Footer.tsx           # 页脚
+
+【src/pages/ 页面目录】
+- SocietyPage.tsx      # 社团情况页面
+- NewsPage.tsx         # 信息公告页面
+- AcademicPage.tsx     # 社务研讨页面（研讨文集、社务征稿）
+- JournalPage.tsx      # 金石艺丛页面
+- RulesPage.tsx        # 规章制度页面
+- OrganizationPage.tsx # 组织架构页面
+- ArticlePage.tsx      # 文章详情页面（自动渲染Markdown）
+
+【src/lib/ 工具函数目录】
+- utils.ts             # 通用工具函数
+- articles.ts          # 文章解析工具（解析Markdown Frontmatter）
+- articleData.ts       # 文章数据列表（添加新文章时需要更新这里）
+
+【dist/ 构建产物目录】
+- npm run build后生成的生产版本文件
+
+【如何添加新文章】
+1. 在 public/articles/ 目录下创建新的 .md 文件
+2. 文件命名格式：YYYY-MM-DD-文章标题.md
+3. 在文章开头添加YAML Frontmatter：
+   ---
+   layout: post
+   title: 文章标题
+   slug: article-slug
+   subtitle: 副标题
+   date: 2026-06-20T00:00:00.000+08:00
+   author: 作者名
+   header-img: /img/uploads/文章配图.png
+   tags:
+     - 标签1
+     - 标签2
+   ---
+4. 在 src/lib/articleData.ts 中添加文章数据
+
+【如何添加文章图片】
+1. 将图片放入 public/images/articles/ 目录
+2. 在文章的 header-img 字段中引用路径
+
+【如何修改网站标题和图标】
+1. 修改 index.html 中的 title 和 link rel="icon"
