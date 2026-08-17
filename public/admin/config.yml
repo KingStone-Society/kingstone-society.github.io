@@ -1,0 +1,56 @@
+# ============================================================
+# 金石篆刻社 · Decap CMS 后台配置
+# 作用：管理员在 /admin/ 登录后，在线创建 / 编辑 / 发布文章
+# 发布 = 提交到 GitHub 仓库（触发 Actions 自动重新部署网站）
+# ============================================================
+
+# ---------------- GitHub 后端认证 ----------------
+# 必须配置 base_url 指向你自己部署的 OAuth 认证服务，
+# 否则后台无法取得 GitHub 写入权限（无法保存/发布文章）。
+# 部署方式（任选其一，均为免费）：
+#   1. 拉取项目 https://github.com/decaporg/decap-cms-oauth ，
+#      部署到 Vercel / Netlify / Railway 等平台；
+#   2. 在 GitHub → Settings → Developer settings → OAuth Apps
+#      创建一个 OAuth App（Homepage URL 填网站地址，
+#      Authorization callback URL 填 OAuth 服务地址 + /callback），
+#      把 client_id / client_secret 配到 OAuth 服务的环境变量里。
+# 完成后把 OAuth 服务的网址填入下方 base_url。
+backend:
+  name: github
+  repo: KingStone-Society/kingstone-society.github.io
+  branch: main
+  # ↓↓↓ 部署好 OAuth 服务后，把下面的占位网址替换成真实地址 ↓↓↓
+  base_url: https://YOUR-OAUTH-SERVICE.example.com
+  auth_endpoint: auth
+
+# ---------------- 图片上传 ----------------
+# 后台编辑器里上传的图片会提交到 public/images/articles/，
+# 对应网站上的访问路径为 /images/articles/xxx
+media_folder: 'public/images/articles'
+public_folder: '/images/articles'
+
+# ---------------- 文章管理 ----------------
+collections:
+  - name: articles
+    label: 文章
+    folder: src/articles
+    create: true
+    delete: true
+    # 新文章文件名：日期 + 访问标识，如 2026-08-18-我的新文章.md
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    sortable_fields: ['date', 'title']
+    fields:
+      - { label: '标题', name: 'title', widget: 'string' }
+      - { label: '副标题', name: 'subtitle', widget: 'string', required: false }
+      - label: '日期'
+        name: 'date'
+        widget: 'datetime'
+        format: 'YYYY-MM-DDTHH:mm:ssZ'
+        date_format: 'YYYY-MM-DD'
+        time_format: 'HH:mm:ss'
+      - { label: '作者', name: 'author', widget: 'string' }
+      - { label: '访问标识 (slug)', name: 'slug', widget: 'string', hint: '文章网址为 /article/访问标识，建议用英文与短横线，如 my-article' }
+      - { label: '封面图', name: 'header-img', widget: 'image', required: false, hint: '图片上传后自动填入 /images/articles/ 路径' }
+      - { label: '标签', name: 'tags', widget: 'list', required: false, hint: '如：社团、管理、文学' }
+      - { label: '板块', name: 'section', widget: 'list', required: false, hint: '第一项为一级板块，第二项为二级板块，如：社务研讨 / 研讨文集' }
+      - { label: '正文', name: 'body', widget: 'markdown', hint: '{XXX} 表示居中，→XXX 表示靠右；单独一行写入图片路径可插入图片' }
