@@ -48,8 +48,8 @@ const OrganizationPage: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-xlys-red font-bold w-16 text-right">副社长：</span>
-                  <span className="text-xlys-dark">秦子琪</span>
-                  <span className="text-xlys-gray text-xs">（第三期）</span>
+                  <span className="text-xlys-dark">（/）</span>
+                  <span className="text-xlys-gray text-xs">（待组阁确定）</span>
                 </div>
               </div>
             </div>
