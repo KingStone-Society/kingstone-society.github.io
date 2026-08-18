@@ -8,8 +8,7 @@ const banners = [
   },
   {
     title: '金石篆刻社四周年社庆系列活动',
-    searchQuery: '社庆',
-    wide: true
+    searchQuery: '社庆'
   },
   {
     title: '秋季雅集',
@@ -19,14 +18,12 @@ const banners = [
 
 const ActivityBanners: React.FC = () => {
   return (
-    <div className="flex flex-col sm:flex-row gap-2 sm:gap-[22px] mt-4">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-[22px] mt-4">
       {banners.map((banner, index) => (
         <Link
           key={index}
           to={`/search?q=${encodeURIComponent(banner.searchQuery)}`}
-          className={`block h-[60px] sm:h-14 bg-gradient-to-r from-xlys-red to-xlys-red-dark flex items-center justify-center text-white font-bold text-sm hover:opacity-90 transition-opacity w-full sm:flex-none sm:w-auto sm:px-6 ${
-            banner.wide ? 'sm:flex-1' : ''
-          }`}
+          className="flex items-center justify-center h-14 sm:h-16 bg-gradient-to-r from-xlys-red to-xlys-red-dark text-white font-bold text-base sm:text-sm text-center px-3 hover:opacity-90 transition-opacity"
         >
           {banner.title}
         </Link>

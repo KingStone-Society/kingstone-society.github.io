@@ -38,12 +38,12 @@ import SearchPage from './pages/SearchPage';
 const HomePage: React.FC = () => {
   return (
     <div className="w-full max-w-[1140px] mx-auto px-3 sm:px-0 py-4">
-      <div className="flex flex-col lg:flex-row gap-4">
+      <div className="flex flex-col lg:flex-row gap-3 lg:gap-4">
         <Banner />
         <NewsSection />
       </div>
       <ActivityBanners />
-      <div className="flex flex-col lg:flex-row gap-4 mt-4">
+      <div className="flex flex-col lg:flex-row gap-3 lg:gap-4 mt-4">
         <MemberNews />
         <AcademicResources />
         <QuickLinks />

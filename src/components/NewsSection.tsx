@@ -26,11 +26,11 @@ const NewsSection: React.FC = () => {
               <img
                 src={featuredArticle.headerImg}
                 alt={featuredArticle.title}
-                className="w-20 h-16 object-cover rounded"
+                className="w-24 h-20 sm:w-20 sm:h-16 object-cover rounded"
               />
             </Link>
           ) : (
-            <div className="w-20 h-16 flex-shrink-0 img-placeholder rounded flex items-center justify-center">
+            <div className="w-24 h-20 sm:w-20 sm:h-16 flex-shrink-0 img-placeholder rounded flex items-center justify-center">
               <span className="text-xs">首图</span>
             </div>
           )}
