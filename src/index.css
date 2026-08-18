@@ -101,4 +101,16 @@ body {
     font-size: 44px;
     line-height: 60px;
   }
+  /* 文章正文（详情页 prose 容器）：移动端翻倍（16px → 32px）。
+     注意：@tailwindcss/typography 未安装，prose 类本身无样式，
+     正文由浏览器默认 16px 渲染；此处容器+子元素双重设置以确保
+     不被其它规则覆盖。@@字号@@ 自定义的 inline 字号优先级更高，不受影响。 */
+  .prose,
+  .prose p,
+  .prose li,
+  .prose blockquote,
+  .prose td,
+  .prose th {
+    font-size: 32px;
+  }
 }
