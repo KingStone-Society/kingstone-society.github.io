@@ -121,9 +121,10 @@
         color: #c23a2b;
       }
       /* ===== Decap CMS 挂载 ===== */
+      /* 注意：Decap CMS 挂载在 body 底部的 #nc-root 中，#cms-panel 只放顶部条，
+         不能设 min-height，否则会留下一整屏空白把 Decap 内容挤到下面 */
       #cms-panel {
         display: none;
-        min-height: 100vh;
       }
       .cms-topbar {
         display: flex;
