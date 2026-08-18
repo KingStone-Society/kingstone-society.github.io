@@ -47,30 +47,30 @@ body {
   }
 }
 
-/* 手机端全局放大字号，避免文字过小 */
+/* 手机端全局放大字号（翻倍），避免文字过小 */
 @media (max-width: 639px) {
   .text-xs {
-    font-size: 14px;
-    line-height: 21px;
+    font-size: 28px;
+    line-height: 40px;
   }
   .text-sm {
-    font-size: 17px;
-    line-height: 25px;
+    font-size: 34px;
+    line-height: 48px;
   }
   .text-base {
-    font-size: 19px;
-    line-height: 28px;
+    font-size: 38px;
+    line-height: 54px;
   }
   .text-lg {
-    font-size: 21px;
-    line-height: 30px;
+    font-size: 42px;
+    line-height: 58px;
   }
   .text-xl {
-    font-size: 23px;
-    line-height: 32px;
+    font-size: 46px;
+    line-height: 62px;
   }
   .text-2xl {
-    font-size: 27px;
-    line-height: 36px;
+    font-size: 54px;
+    line-height: 70px;
   }
 }

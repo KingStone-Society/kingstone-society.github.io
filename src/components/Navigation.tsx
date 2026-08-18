@@ -126,10 +126,10 @@ const Navigation: React.FC = () => {
         </nav>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="lg:hidden text-white p-3 focus:outline-none"
+          className="lg:hidden text-white p-4 sm:p-3 focus:outline-none"
           aria-label={mobileOpen ? '关闭菜单' : '打开菜单'}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-12 h-12 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -158,7 +158,7 @@ const Navigation: React.FC = () => {
                       className="px-4 py-3 text-white/80 focus:outline-none"
                       aria-label={`展开${item.name}子菜单`}
                     >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-8 h-8 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
