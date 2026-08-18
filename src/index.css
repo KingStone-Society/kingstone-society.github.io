@@ -47,8 +47,8 @@ body {
   }
 }
 
-/* 手机端全局放大字号（翻倍），避免文字过小 */
-@media (max-width: 639px) {
+/* 移动端（单列布局，≤1023px）全局放大字号（翻倍），避免文字过小 */
+@media (max-width: 1023px) {
   .text-xs {
     font-size: 28px;
     line-height: 40px;

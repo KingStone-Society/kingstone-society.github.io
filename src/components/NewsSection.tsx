@@ -56,7 +56,7 @@ const NewsSection: React.FC = () => {
           </li>
         ))}
       </ul>
-      <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mt-4 pt-4 border-t border-xlys-beige-dark">
+      <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-4 mt-4 pt-4 lg:justify-center border-t border-xlys-beige-dark">
         <a
           href="https://ssjg.jdjy.sh.cn/"
           target="_blank"
