@@ -50,27 +50,27 @@ body {
 /* 手机端全局放大字号，避免文字过小 */
 @media (max-width: 639px) {
   .text-xs {
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 21px;
   }
   .text-sm {
-    font-size: 15px;
-    line-height: 22px;
+    font-size: 17px;
+    line-height: 25px;
   }
   .text-base {
-    font-size: 17px;
-    line-height: 26px;
-  }
-  .text-lg {
     font-size: 19px;
     line-height: 28px;
   }
-  .text-xl {
+  .text-lg {
     font-size: 21px;
     line-height: 30px;
   }
-  .text-2xl {
-    font-size: 24px;
+  .text-xl {
+    font-size: 23px;
     line-height: 32px;
+  }
+  .text-2xl {
+    font-size: 27px;
+    line-height: 36px;
   }
 }
