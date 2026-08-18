@@ -17,7 +17,7 @@ const Header: React.FC = () => {
 
   return (
     <div className="bg-white py-2 px-0">
-      <div className="container mx-auto px-0 flex justify-end items-center">
+      <div className="w-full max-w-[1140px] mx-auto px-3 sm:px-0 flex justify-end items-center gap-3 sm:gap-0 flex-wrap">
         <div className="flex items-center space-x-2">
           <a href="/admin/" className="text-xlys-dark hover:text-xlys-red text-sm">登录</a>
           <span className="text-xlys-gray">|</span>
@@ -31,7 +31,7 @@ const Header: React.FC = () => {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyPress={handleKeyPress}
-              className="w-64 h-8 px-3 border border-xlys-light-gray rounded-sm text-sm outline-none focus:border-xlys-red"
+              className="w-40 sm:w-64 h-8 px-3 border border-xlys-light-gray rounded-sm text-sm outline-none focus:border-xlys-red"
               maxLength={20}
             />
             <button

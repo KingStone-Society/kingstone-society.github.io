@@ -15,24 +15,24 @@ const NewsGovernmentPage: React.FC = () => {
   const pageArticles = filteredArticles.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   
   return (
-    <div className="flex gap-4">
-      <div className="w-[200px]">
+    <div className="flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[200px]">
         <div className="bg-white border border-xlys-beige-dark p-4">
           <h3 className="text-xlys-dark font-bold text-lg mb-4">金石资讯</h3>
-          <ul className="space-y-2">
-            <li>
+          <ul className="flex flex-wrap gap-2 lg:block lg:space-y-2">
+            <li className="flex-1 lg:flex-none">
               <Link to="/news" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">金石资讯</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/news/member" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">社员动态</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/news/activity" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">活动动态</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/news/government" className="block bg-xlys-red text-white px-3 py-2 text-sm text-center">政务信息</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/news/notice" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">公告公示</Link>
             </li>
           </ul>

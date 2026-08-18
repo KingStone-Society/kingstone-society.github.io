@@ -30,8 +30,8 @@ const SearchPage: React.FC = () => {
   };
 
   return (
-    <div className="flex gap-4">
-      <div className="w-[200px]">
+    <div className="flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[200px]">
         <div className="bg-white border border-xlys-beige-dark p-4">
           <h3 className="text-xlys-dark font-bold text-lg mb-4">搜索</h3>
           <form onSubmit={handleSearch} className="mb-4">
@@ -95,7 +95,7 @@ const SearchPage: React.FC = () => {
             <div className="space-y-4">
               {results.map((article, index) => (
                 <div key={index} className="flex items-start gap-4 pb-4 border-b border-xlys-beige-dark last:border-b-0">
-                  <div className="w-32 h-24 flex-shrink-0 overflow-hidden">
+                  <div className="w-24 h-20 sm:w-32 sm:h-24 flex-shrink-0 overflow-hidden">
                     {article.headerImg ? (
                       <img src={article.headerImg} alt={article.title} className="w-full h-full object-cover" />
                     ) : (

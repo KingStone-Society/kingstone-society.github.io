@@ -9,7 +9,7 @@ const MemberNews: React.FC = () => {
   );
 
   return (
-    <div className="w-[473px] p-4">
+    <div className="w-full lg:w-[473px] p-4">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xlys-dark font-bold text-lg">社员动态</h3>
         <Link to="/news/member" className="text-xlys-red text-sm flex items-center">
@@ -38,7 +38,7 @@ const MemberNews: React.FC = () => {
               </p>
             </div>
           </div>
-          <div className="columns-2 space-y-2">
+          <div className="columns-1 sm:columns-2 space-y-2">
             {memberArticles.slice(1).map((item, index) => (
               <li key={index} className="break-inside-avoid">
                 <Link

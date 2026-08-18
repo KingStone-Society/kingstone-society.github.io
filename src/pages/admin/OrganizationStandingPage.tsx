@@ -25,15 +25,15 @@ const OrganizationStandingPage: React.FC = () => {
   }
 
   return (
-    <div className="flex gap-4">
-      <div className="w-[200px]">
+    <div className="flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[200px]">
         <div className="bg-white border border-xlys-beige-dark p-4">
           <h3 className="text-xlys-dark font-bold text-lg mb-4">组织架构</h3>
-          <ul className="space-y-2">
-            <li>
+          <ul className="flex flex-wrap gap-2 lg:block lg:space-y-2">
+            <li className="flex-1 lg:flex-none">
               <Link to="/organization" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">社务委员会</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/organization/standing" className="block bg-xlys-red text-white px-3 py-2 text-sm text-center">社团智库</Link>
             </li>
           </ul>
@@ -61,7 +61,7 @@ const OrganizationStandingPage: React.FC = () => {
             <div className="mt-4 bg-xlys-beige/50 rounded p-4">
               <h4 className="text-xlys-dark font-bold text-sm mb-3 border-b border-xlys-beige-dark pb-2">社团智库成员</h4>
               <div className="text-sm">
-                <div className="grid grid-cols-2 gap-0">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
                   <div className="border-b border-xlys-beige-dark pb-1 mb-1 text-xlys-red font-bold">社长</div>
                   <div className="border-b border-xlys-beige-dark pb-1 mb-1 text-xlys-red font-bold">副社长</div>
                   {data.members.map((member, index) => (

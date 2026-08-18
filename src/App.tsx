@@ -37,13 +37,13 @@ import SearchPage from './pages/SearchPage';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="container mx-auto px-0 py-4">
-      <div className="flex gap-4">
+    <div className="w-full max-w-[1140px] mx-auto px-3 sm:px-0 py-4">
+      <div className="flex flex-col lg:flex-row gap-4">
         <Banner />
         <NewsSection />
       </div>
       <ActivityBanners />
-      <div className="flex gap-[22px] mt-4">
+      <div className="flex flex-col lg:flex-row gap-4 mt-4">
         <MemberNews />
         <AcademicResources />
         <QuickLinks />
@@ -57,16 +57,16 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-xlys-beige flex flex-col items-center">
       <div className="bg-white w-full">
-        <div className="w-[1140px] mx-auto px-0">
+        <div className="w-full max-w-[1140px] mx-auto px-3 sm:px-0">
           <Header />
         </div>
       </div>
       <div className="bg-xlys-red w-full">
-        <div className="w-[1140px] mx-auto px-0">
+        <div className="w-full max-w-[1140px] mx-auto px-3 sm:px-0">
           <Navigation />
         </div>
       </div>
-      <div className="w-[1140px] px-0 py-4">
+      <div className="w-full max-w-[1140px] px-3 sm:px-0 py-4">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/society" element={<SocietyPage />} />
@@ -96,7 +96,7 @@ const App: React.FC = () => {
         </Routes>
       </div>
       <div className="bg-xlys-dark w-full mt-auto">
-        <div className="w-[1140px] mx-auto px-0">
+        <div className="w-full max-w-[1140px] mx-auto px-3 sm:px-0">
           <Footer />
         </div>
       </div>

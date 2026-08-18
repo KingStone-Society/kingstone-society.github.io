@@ -24,12 +24,12 @@ const CooperationPage: React.FC = () => {
   }
 
   return (
-    <div className="flex gap-4">
-      <div className="w-[200px]">
+    <div className="flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[200px]">
         <div className="bg-white border border-xlys-beige-dark p-4">
           <h3 className="text-xlys-dark font-bold text-lg mb-4">合作申请</h3>
-          <ul className="space-y-2">
-            <li>
+          <ul className="flex flex-wrap gap-2 lg:block lg:space-y-2">
+            <li className="flex-1 lg:flex-none">
               <Link to="/cooperation" className="block bg-xlys-red text-white px-3 py-2 text-sm text-center">合作申请</Link>
             </li>
           </ul>

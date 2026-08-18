@@ -22,7 +22,7 @@ const links = [
 
 const QuickLinks: React.FC = () => {
   return (
-    <div className="w-[340px] p-4">
+    <div className="w-full lg:w-[340px] p-4">
       <ul className="grid grid-cols-2 gap-3">
         {links.map((link, index) => (
           <li key={index}>

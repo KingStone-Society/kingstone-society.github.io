@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 const AcademicSubmissionPage: React.FC = () => {
   return (
-    <div className="flex gap-4">
-      <div className="w-[200px]">
+    <div className="flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[200px]">
         <div className="bg-white border border-xlys-beige-dark p-4">
           <h3 className="text-xlys-dark font-bold text-lg mb-4">社务研讨</h3>
-          <ul className="space-y-2">
-            <li>
+          <ul className="flex flex-wrap gap-2 lg:block lg:space-y-2">
+            <li className="flex-1 lg:flex-none">
               <Link to="/academic" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">研讨文集</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/academic/submission" className="block bg-xlys-red text-white px-3 py-2 text-sm text-center">社务征稿</Link>
             </li>
           </ul>

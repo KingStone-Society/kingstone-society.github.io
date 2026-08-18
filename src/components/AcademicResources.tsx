@@ -13,7 +13,7 @@ const AcademicResources: React.FC = () => {
   ).slice(0, 4);
 
   return (
-    <div className="w-[343px] p-4">
+    <div className="w-full lg:w-[343px] p-4">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xlys-dark font-bold text-lg">学术资源</h3>
         <Link to="/academic" className="text-xlys-red text-sm flex items-center">

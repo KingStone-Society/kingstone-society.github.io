@@ -22,7 +22,7 @@ const Banner: React.FC = () => {
   }, [bannerData.length]);
 
   return (
-    <div className="relative w-[700px] h-[350px] overflow-hidden">
+    <div className="relative w-full lg:w-[700px] h-52 sm:h-64 lg:h-[350px] overflow-hidden">
       <div
         className="flex transition-transform duration-500 ease-in-out h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}

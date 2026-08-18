@@ -11,7 +11,7 @@ const NewsSection: React.FC = () => {
   const otherArticles = newsArticles.slice(1, 5);
 
   return (
-    <div className="w-[400px] p-4 flex flex-col">
+    <div className="w-full lg:w-[400px] p-4 flex flex-col">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xlys-dark font-bold text-lg">金石资讯</h3>
         <Link to="/news" className="text-xlys-red text-sm flex items-center">
