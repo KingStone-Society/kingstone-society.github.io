@@ -10,9 +10,9 @@ const MemberNews: React.FC = () => {
 
   return (
     <div className="w-full lg:w-[473px] p-4">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xlys-dark font-bold text-lg">社员动态</h3>
-        <Link to="/news/member" className="text-xlys-red text-sm flex items-center">
+      <div className="flex items-center gap-2 mb-4">
+        <h3 className="text-xlys-dark font-bold text-lg section-title flex-shrink-0">社员动态</h3>
+        <Link to="/news/member" className="text-xlys-red text-sm section-more flex items-center flex-shrink-0">
           <span>更多</span>
           <span className="ml-1">&gt;&gt;</span>
         </Link>

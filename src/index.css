@@ -73,4 +73,20 @@ body {
     font-size: 54px;
     line-height: 70px;
   }
+
+  /* 区块标题（金石资讯/社员动态/学术资源）：放大、与"更多"紧凑排列 */
+  .section-title {
+    font-size: 56px;
+    line-height: 64px;
+  }
+  .section-more {
+    font-size: 44px;
+    line-height: 56px;
+  }
+
+  /* 底部 logo 链接文字：尽量放大（7 字"钱牧风个人博客"56px 会溢出屏幕，取 44px） */
+  .link-text-2x {
+    font-size: 44px;
+    line-height: 56px;
+  }
 }

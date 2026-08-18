@@ -12,32 +12,12 @@ const NewsSection: React.FC = () => {
 
   return (
     <div className="w-full lg:w-[400px] p-4 flex flex-col">
-      <div className="flex items-center justify-between gap-2 mb-4">
-        <div className="flex items-center gap-2 flex-shrink-0">
-          <h3 className="text-xlys-dark font-bold text-lg">金石资讯</h3>
-          <Link to="/news" className="text-xlys-red text-sm flex items-center flex-shrink-0">
-            <span>更多</span>
-            <span className="ml-1">&gt;&gt;</span>
-          </Link>
-        </div>
-        <div className="flex flex-col items-center gap-1 flex-shrink-0">
-          <a
-            href="https://ssjg.jdjy.sh.cn/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center hover:opacity-80 transition-opacity"
-          >
-            <img src="/logo-ssjg.png" alt="学校官网" className="h-8 sm:h-10 w-auto object-contain" />
-          </a>
-          <a
-            href="https://qian-mf.github.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center hover:opacity-80 transition-opacity"
-          >
-            <img src="/logo-XCL.jpg" alt="星川庐" className="h-8 sm:h-10 w-auto object-contain" />
-          </a>
-        </div>
+      <div className="flex items-center gap-2 mb-4">
+        <h3 className="text-xlys-dark font-bold text-lg section-title flex-shrink-0">金石资讯</h3>
+        <Link to="/news" className="text-xlys-red text-sm section-more flex items-center flex-shrink-0">
+          <span>更多</span>
+          <span className="ml-1">&gt;&gt;</span>
+        </Link>
       </div>
       {featuredArticle && (
         <div className="mb-4 flex gap-3">
@@ -76,6 +56,26 @@ const NewsSection: React.FC = () => {
           </li>
         ))}
       </ul>
+      <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mt-4 pt-4 border-t border-xlys-beige-dark">
+        <a
+          href="https://ssjg.jdjy.sh.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col items-center hover:opacity-80 transition-opacity"
+        >
+          <img src="/logo-ssjg.png" alt="学校官网" className="h-12 sm:h-10 w-auto object-contain mb-1" />
+          <span className="text-xs text-xlys-gray link-text-2x">学校官网</span>
+        </a>
+        <a
+          href="https://qian-mf.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col items-center hover:opacity-80 transition-opacity"
+        >
+          <img src="/logo-XCL.jpg" alt="星川庐" className="h-12 sm:h-10 w-auto object-contain mb-1" />
+          <span className="text-xs text-xlys-gray link-text-2x">钱牧风个人博客</span>
+        </a>
+      </div>
     </div>
   );
 };
