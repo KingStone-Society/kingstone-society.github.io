@@ -25,6 +25,7 @@ dist-ssr
 
 # 敏感信息 - 禁止提交到仓库
 TOKEN管理/
+令牌记录.md
 
 # IDE 本地数据
 .trae/
