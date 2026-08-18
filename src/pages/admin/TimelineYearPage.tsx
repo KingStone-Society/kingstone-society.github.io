@@ -1,38 +1,23 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useJsonData } from '../../hooks/useJsonData';
 
-const yearEvents: Record<string, string[]> = {
-  '2023': [
-    '9月 金石篆刻社成立，钱牧风担任首任社长',
-    '10月 定稿篆刻社章程和考评标准，从此社团成为最早拥有章程的社团',
-    '12月 社团参加上师嘉高特色普通高中创建区域展示活动的社团展示活动',
-  ],
-  '2024': [
-    '4月 社团参加学校首届社团文化节',
-    '5月 社团联合墨拓社赴交附嘉分参加嘉定区教育系统庆祝建团102周年主题活动的社团展示活动',
-    '6月 时任社长钱牧风代表社团参加学校与上师大合作三周年展示活动，并在会上发言',
-    '6月 社团参加校园开放日的社团展示',
-    '9月 社团参加学校首届社团评选活动并获诸票数第一，社团获明星社团，时任社长获明星社长',
-    '9月 刘馨阳接任社长，主持社团海报和新LOGO的设计',
-    '12月 社团参加学校市级展示的社团展示',
-    '12月 社团参与学校社团宣传片的脚本编写与拍摄',
-  ],
-  '2025': [
-    '5月 社团参加校园开放日社团展示',
-    '6月 社团参加校园开放日的社团展示',
-    '6月 社团联合墨拓社、书法社参加嘉定区美育浸润成果展的社团展示',
-    '9月 张奕茹接任社长',
-  ],
-  '2026': [
-    '待补充',
-  ],
-};
+interface YearEvents {
+  year: string;
+  events: string[];
+}
 
 const TimelineYearPage: React.FC = () => {
   const { year } = useParams<{ year: string }>();
-  const events = yearEvents[year || ''] || [];
+  const { data, loading } = useJsonData<{ years: YearEvents[] }>('/data/timeline.json');
+  const yearData = data?.years.find((y) => y.year === year);
+  const events = yearData?.events || [];
 
-  if (!year || !yearEvents[year]) {
+  if (loading) {
+    return <div className="bg-white border border-xlys-beige-dark p-4 text-xlys-gray text-sm text-center">加载中…</div>;
+  }
+
+  if (!year || !yearData) {
     return (
       <div className="flex gap-4">
         <div className="w-[200px]">
@@ -108,7 +93,7 @@ const TimelineYearPage: React.FC = () => {
           </ul>
           <div className="mt-4 pt-4 border-t border-xlys-beige-dark">
             <h4 className="text-xlys-dark font-bold text-sm mb-2">年度索引</h4>
-            {Object.keys(yearEvents).map((y) => (
+            {(data?.years || []).map(({ year: y }) => (
               <li key={y}>
                 <Link to={`/society/timeline/${y}`} className={`block px-3 py-1 text-xs text-center ${year === y ? 'bg-xlys-red text-white' : 'hover:bg-xlys-beige text-xlys-dark'}`}>
                   {y}年

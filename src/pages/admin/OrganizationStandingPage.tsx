@@ -1,7 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useJsonData } from '../../hooks/useJsonData';
+
+interface StandingMember {
+  president: { name: string; term: string };
+  vice: { name: string };
+}
+
+interface StandingData {
+  introduction: string;
+  duties: string[];
+  members: StandingMember[];
+}
 
 const OrganizationStandingPage: React.FC = () => {
+  const { data, loading } = useJsonData<StandingData>('/data/standing.json');
+
+  if (loading) {
+    return <div className="bg-white border border-xlys-beige-dark p-4 text-xlys-gray text-sm text-center">加载中…</div>;
+  }
+
+  if (!data) {
+    return <div className="bg-white border border-xlys-beige-dark p-4 text-xlys-gray text-sm text-center">数据加载失败</div>;
+  }
+
   return (
     <div className="flex gap-4">
       <div className="w-[200px]">
@@ -29,13 +51,12 @@ const OrganizationStandingPage: React.FC = () => {
           </div>
           <h2 className="text-xlys-dark font-bold text-xl mb-6 border-b border-xlys-beige-dark pb-2">社团智库</h2>
           <div className="text-xlys-dark text-sm leading-relaxed">
-            <p className="mb-4">社团智库全称“金石篆刻社团智慧社务研究中心”，是社务委员会的常设机构，在社务委员会闭会期间行使其职权。社团智库由逊位的前社长、副社长组成。社团智库还负责针对社务委员会较为困难或无力处理的事务提供建议。</p>
+            <p className="mb-4">{data.introduction}</p>
             <p className="mb-4">主要职责：</p>
             <ul className="list-disc list-inside mb-4 space-y-1">
-              <li>根据社务委员会的题名，考查并决定新一期社长</li>
-              <li>召集和主持社务委员会会议</li>
-              <li>在规定的紧急情况时介入社团管理</li>
-              <li>负责社团长期事务的计划、协调和处理</li>
+              {data.duties.map((duty) => (
+                <li key={duty}>{duty}</li>
+              ))}
             </ul>
             <div className="mt-4 bg-xlys-beige/50 rounded p-4">
               <h4 className="text-xlys-dark font-bold text-sm mb-3 border-b border-xlys-beige-dark pb-2">社团智库成员</h4>
@@ -43,27 +64,19 @@ const OrganizationStandingPage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-0">
                   <div className="border-b border-xlys-beige-dark pb-1 mb-1 text-xlys-red font-bold">社长</div>
                   <div className="border-b border-xlys-beige-dark pb-1 mb-1 text-xlys-red font-bold">副社长</div>
-                  <div className="py-2 border-b border-xlys-beige-dark/50">
-                    <span className="text-xlys-dark">钱牧风</span>
-                    <span className="text-xlys-gray text-xs ml-1">（2023.8~2024.9）</span>
-                  </div>
-                  <div className="py-2 border-b border-xlys-beige-dark/50">
-                    <span className="text-xlys-gray"></span>
-                  </div>
-                  <div className="py-2 border-b border-xlys-beige-dark/50">
-                    <span className="text-xlys-dark">刘馨阳</span>
-                    <span className="text-xlys-gray text-xs ml-1">（2024.9~2025.9）</span>
-                  </div>
-                  <div className="py-2 border-b border-xlys-beige-dark/50">
-                    <span className="text-xlys-dark">廖翌辰</span>
-                  </div>
-                  <div className="py-2">
-                    <span className="text-xlys-dark">张奕茹</span>
-                    <span className="text-xlys-gray text-xs ml-1">（2025.9~2026.9）</span>
-                  </div>
-                  <div className="py-2">
-                    <span className="text-xlys-dark">秦子琪</span>
-                  </div>
+                  {data.members.map((member, index) => (
+                    <React.Fragment key={index}>
+                      <div className={`py-2 ${index < data.members.length - 1 ? 'border-b border-xlys-beige-dark/50' : ''}`}>
+                        <span className="text-xlys-dark">{member.president.name}</span>
+                        {member.president.term && (
+                          <span className="text-xlys-gray text-xs ml-1">（{member.president.term}）</span>
+                        )}
+                      </div>
+                      <div className={`py-2 ${index < data.members.length - 1 ? 'border-b border-xlys-beige-dark/50' : ''}`}>
+                        <span className="text-xlys-gray">{member.vice.name || ''}</span>
+                      </div>
+                    </React.Fragment>
+                  ))}
                 </div>
               </div>
             </div>

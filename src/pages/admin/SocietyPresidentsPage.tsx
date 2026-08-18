@@ -1,30 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useJsonData } from '../../hooks/useJsonData';
 
-const presidents = [
-  {
-    term: '2023.8~2024.9',
-    name: '钱牧风',
-    description: '创社社长，奠定了社团发展基础'
-  },
-  {
-    term: '2024.9~2025.9',
-    name: '刘馨阳',
-    description: '在社团过渡时期继续贯彻社团制度和精神'
-  },
-  {
-    term: '2025.9~2026.9',
-    name: '张奕茹',
-    description: '接续发展社团工作和篆刻艺术创作'
-  },
-  {
-    term: '2025.9~2026.9',
-    name: '许伊凯',
-    description: '现任社长'
-  }
-];
+interface President {
+  name: string;
+  term: string;
+  description: string;
+}
 
 const SocietyPresidentsPage: React.FC = () => {
+  const { data, loading } = useJsonData<{ presidents: President[] }>('/data/presidents.json');
+  const presidents = data?.presidents || [];
+
+  if (loading) {
+    return <div className="bg-white border border-xlys-beige-dark p-4 text-xlys-gray text-sm text-center">加载中…</div>;
+  }
+
   return (
     <div className="flex gap-4">
       <div className="w-[200px]">

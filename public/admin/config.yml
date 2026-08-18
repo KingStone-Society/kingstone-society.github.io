@@ -61,3 +61,142 @@ collections:
       - { label: '标签', name: 'tags', widget: 'list', required: false, hint: '如：社团、管理、文学' }
       - { label: '板块', name: 'section', widget: 'list', required: false, hint: '第一项为一级板块，第二项为二级板块，如：社务研讨 / 研讨文集' }
       - { label: '正文', name: 'body', widget: 'markdown', hint: '{XXX} 表示居中，→XXX 表示靠右；单独一行写入图片路径可插入图片' }
+
+  # ============================================================
+  # 静态板块数据（编辑保存后自动提交到仓库，触发重新部署）
+  # ============================================================
+
+  # ---------------- 历任社长 ----------------
+  - name: presidents
+    label: 历任社长
+    files:
+      - name: presidents
+        label: 历任社长与社长详情
+        file: public/data/presidents.json
+        fields:
+          - label: 社长列表
+            name: presidents
+            widget: list
+            fields:
+              - { label: 姓名, name: name, widget: string }
+              - { label: 任期, name: term, widget: string, hint: '如 2023.8~2024.9' }
+              - { label: 一句话简介, name: description, widget: text }
+              - { label: 照片, name: photo, widget: image, required: false, hint: '上传后自动填入 /images/articles/ 路径' }
+              - label: 个人简介（多段）
+                name: introduction
+                widget: list
+                field: { label: 段落, name: paragraph, widget: text }
+              - label: 主要成就
+                name: achievements
+                widget: list
+                field: { label: 成就, name: item, widget: text }
+
+  # ---------------- 社员名录 ----------------
+  - name: members
+    label: 社员名录
+    files:
+      - name: members
+        label: 社员名录（按届分组）
+        file: public/data/members.json
+        fields:
+          - label: 届别列表
+            name: generations
+            widget: list
+            fields:
+              - { label: 届别名称, name: name, widget: string, hint: '如 第1届' }
+              - label: 社员名单
+                name: members
+                widget: list
+                field: { label: 社员, name: member, widget: string }
+
+  # ---------------- 社务委员会 ----------------
+  - name: organization
+    label: 社务委员会
+    files:
+      - name: organization
+        label: 社务委员会介绍与名单
+        file: public/data/organization.json
+        fields:
+          - { label: 介绍, name: introduction, widget: text }
+          - label: 主要职责
+            name: duties
+            widget: list
+            field: { label: 职责, name: item, widget: string }
+          - label: 时任委员会名单
+            name: committee
+            widget: list
+            fields:
+              - { label: 职务, name: role, widget: string, hint: '如 社长、副社长' }
+              - { label: 姓名, name: name, widget: string }
+              - { label: 任期, name: term, widget: string, required: false }
+
+  # ---------------- 社团智库 ----------------
+  - name: standing
+    label: 社团智库
+    files:
+      - name: standing
+        label: 社团智库介绍与成员
+        file: public/data/standing.json
+        fields:
+          - { label: 介绍, name: introduction, widget: text }
+          - label: 主要职责
+            name: duties
+            widget: list
+            field: { label: 职责, name: item, widget: string }
+          - label: 智库成员（社长/副社长配对）
+            name: members
+            widget: list
+            fields:
+              - label: 社长
+                name: president
+                widget: object
+                fields:
+                  - { label: 姓名, name: name, widget: string }
+                  - { label: 任期, name: term, widget: string, required: false }
+              - label: 副社长
+                name: vice
+                widget: object
+                fields:
+                  - { label: 姓名, name: name, widget: string }
+
+  # ---------------- 大事记 ----------------
+  - name: timeline
+    label: 大事记
+    files:
+      - name: timeline
+        label: 社团大事记（按年份）
+        file: public/data/timeline.json
+        fields:
+          - label: 年度列表
+            name: years
+            widget: list
+            fields:
+              - { label: 年份, name: year, widget: string, hint: '如 2026' }
+              - label: 事件列表
+                name: events
+                widget: list
+                field: { label: 事件, name: event, widget: text }
+
+  # ---------------- 合作申请 ----------------
+  - name: cooperation
+    label: 合作申请
+    files:
+      - name: cooperation
+        label: 合作申请页面内容
+        file: public/data/cooperation.json
+        fields:
+          - { label: 介绍, name: introduction, widget: text }
+          - label: 合作方向
+            name: directions
+            widget: list
+            field: { label: 方向, name: item, widget: string }
+          - { label: 联系提示（前半段）, name: note, widget: text }
+          - { label: 联系邮箱, name: email, widget: string }
+          - { label: 联系提示（后半段）, name: noteTail, widget: text }
+          - label: 联系人信息
+            name: contact
+            widget: object
+            fields:
+              - { label: 联系人, name: person, widget: string }
+              - { label: 联系电话, name: phone, widget: string }
+          - { label: 申请表图片, name: image, widget: image, required: false }
