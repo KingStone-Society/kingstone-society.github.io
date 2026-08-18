@@ -159,6 +159,13 @@ const Navigation: React.FC = () => {
               </svg>
             </button>
           </div>
+          {/* 桌面登录入口（指向后台管理，仅电脑端显示，注册入口不恢复） */}
+          <a
+            href="/admin/"
+            className="hidden lg:block text-white hover:text-xlys-gold text-sm font-bold whitespace-nowrap"
+          >
+            登录
+          </a>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden text-white p-4 focus:outline-none"
