@@ -237,10 +237,11 @@
         });
       });
 
-      // 动态加载 Decap CMS（优先 jsDelivr，失败回退 unpkg）
+      // 动态加载 Decap CMS（优先本地文件 decap-cms.js，失败回退 CDN）
       function loadDecap() {
         return new Promise(function (resolve, reject) {
           var srcs = [
+            '/admin/decap-cms.js',
             'https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js',
             'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js'
           ];
