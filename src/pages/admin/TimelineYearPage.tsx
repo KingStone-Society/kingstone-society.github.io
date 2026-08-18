@@ -19,24 +19,24 @@ const TimelineYearPage: React.FC = () => {
 
   if (!year || !yearData) {
     return (
-      <div className="flex gap-4">
-        <div className="w-[200px]">
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="w-full lg:w-[200px]">
           <div className="bg-white border border-xlys-beige-dark p-4">
             <h3 className="text-xlys-dark font-bold text-lg mb-4">社团情况</h3>
-            <ul className="space-y-2">
-              <li>
+            <ul className="flex flex-wrap gap-2 lg:block lg:space-y-2">
+              <li className="flex-1 lg:flex-none">
                 <Link to="/society" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">社团概况</Link>
               </li>
-              <li>
+              <li className="flex-1 lg:flex-none">
                 <Link to="/society/history" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">师林撷英</Link>
               </li>
-              <li>
+              <li className="flex-1 lg:flex-none">
                 <Link to="/society/presidents" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">历任社长</Link>
               </li>
-              <li>
+              <li className="flex-1 lg:flex-none">
                 <Link to="/society/members" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">社员名录</Link>
               </li>
-              <li>
+              <li className="flex-1 lg:flex-none">
                 <Link to="/society/timeline" className="block bg-xlys-red text-white px-3 py-2 text-sm text-center">大事记</Link>
               </li>
             </ul>
@@ -70,36 +70,38 @@ const TimelineYearPage: React.FC = () => {
   }
 
   return (
-    <div className="flex gap-4">
-      <div className="w-[200px]">
+    <div className="flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[200px]">
         <div className="bg-white border border-xlys-beige-dark p-4">
           <h3 className="text-xlys-dark font-bold text-lg mb-4">社团情况</h3>
-          <ul className="space-y-2">
-            <li>
+          <ul className="flex flex-wrap gap-2 lg:block lg:space-y-2">
+            <li className="flex-1 lg:flex-none">
               <Link to="/society" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">社团概况</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/society/history" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">师林撷英</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/society/presidents" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">历任社长</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/society/members" className="block hover:bg-xlys-beige text-xlys-dark px-3 py-2 text-sm text-center">社员名录</Link>
             </li>
-            <li>
+            <li className="flex-1 lg:flex-none">
               <Link to="/society/timeline" className="block bg-xlys-red text-white px-3 py-2 text-sm text-center">大事记</Link>
             </li>
           </ul>
           <div className="mt-4 pt-4 border-t border-xlys-beige-dark">
             <h4 className="text-xlys-dark font-bold text-sm mb-2">年度索引</h4>
-            {(data?.years || []).map(({ year: y }) => (
-              <li key={y}>
-                <Link to={`/society/timeline/${y}`} className={`block px-3 py-1 text-xs text-center ${year === y ? 'bg-xlys-red text-white' : 'hover:bg-xlys-beige text-xlys-dark'}`}>
-                  {y}年
-                </Link>
-              </li>
-            ))}
+            <ul className="flex flex-wrap gap-2 lg:block lg:space-y-2">
+              {(data?.years || []).map(({ year: y }) => (
+                <li key={y} className="flex-1 lg:flex-none">
+                  <Link to={`/society/timeline/${y}`} className={`block px-3 py-1 text-xs text-center ${year === y ? 'bg-xlys-red text-white' : 'hover:bg-xlys-beige text-xlys-dark'}`}>
+                    {y}年
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

@@ -146,7 +146,7 @@ const Navigation: React.FC = () => {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-64 h-8 px-3 border border-xlys-light-gray rounded-sm text-sm bg-white outline-none focus:border-xlys-red"
+              className="w-[228px] h-8 px-3 border border-xlys-light-gray rounded-sm text-sm bg-white outline-none focus:border-xlys-red"
               maxLength={20}
             />
             <button
