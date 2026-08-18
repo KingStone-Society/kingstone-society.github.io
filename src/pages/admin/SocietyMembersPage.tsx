@@ -73,7 +73,7 @@ const SocietyMembersPage: React.FC = () => {
           <div className="border border-xlys-beige-dark p-4">
             <h4 className="text-xlys-dark font-bold text-sm mb-4">{selectedGeneration}社员名单</h4>
             {currentGeneration.members.length > 0 ? (
-              <div className="columns-2 md:columns-4 gap-4 space-y-2">
+              <div className="columns-3 lg:columns-4 gap-4 space-y-2">
                 {currentGeneration.members.map((name, index) => (
                   <div key={index} className="text-xlys-dark text-sm break-inside-avoid">{name}</div>
                 ))}
