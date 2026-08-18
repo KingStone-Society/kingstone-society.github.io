@@ -1,6 +1,5 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
 import Navigation from './components/Navigation';
 import Banner from './components/Banner';
 import NewsSection from './components/NewsSection';
@@ -56,11 +55,6 @@ const HomePage: React.FC = () => {
 const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-xlys-beige flex flex-col items-center">
-      <div className="bg-white w-full">
-        <div className="w-full max-w-[1140px] mx-auto px-3 sm:px-0">
-          <Header />
-        </div>
-      </div>
       <div className="bg-xlys-red w-full">
         <div className="w-full max-w-[1140px] mx-auto px-3 sm:px-0">
           <Navigation />

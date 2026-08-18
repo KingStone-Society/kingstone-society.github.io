@@ -63,6 +63,19 @@ const Navigation: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSubIndex, setMobileSubIndex] = useState<number | null>(null);
+  const [searchText, setSearchText] = useState('');
+
+  const handleSearch = () => {
+    if (searchText.trim()) {
+      window.location.href = `/search?q=${encodeURIComponent(searchText)}`;
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   const closeMobile = () => {
     setMobileOpen(false);
@@ -73,7 +86,7 @@ const Navigation: React.FC = () => {
     <div>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <div className="w-12 h-12 mr-2">
+          <div className="w-16 h-16 lg:w-12 lg:h-12 mr-2">
             <img
               src="/logo.png"
               alt="金石篆刻社"
@@ -83,7 +96,7 @@ const Navigation: React.FC = () => {
           <img
             src="/题字.svg?v=20260706"
             alt="金石篆刻社"
-            className="h-10 w-auto object-contain"
+            className="h-14 lg:h-10 w-auto object-contain"
           />
         </div>
         <nav className="hidden lg:flex items-center space-x-1">
@@ -96,7 +109,7 @@ const Navigation: React.FC = () => {
             >
               <Link
                 to={item.href}
-                className="text-white hover:text-xlys-gold px-4 py-3 text-sm font-medium transition-colors"
+                className="text-white hover:text-xlys-gold px-4 py-3 text-sm font-bold transition-colors"
               >
                 {item.name}
               </Link>
@@ -124,18 +137,62 @@ const Navigation: React.FC = () => {
             </div>
           ))}
         </nav>
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="lg:hidden text-white p-4 sm:p-3 focus:outline-none"
-          aria-label={mobileOpen ? '关闭菜单' : '打开菜单'}
-        >
-          <svg className="w-12 h-12 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d={mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+        <div className="flex items-center gap-2">
+          {/* 桌面搜索框：位于红色功能条右侧 */}
+          <div className="hidden lg:block relative">
+            <input
+              type="text"
+              placeholder="请输入关键字"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="w-64 h-8 px-3 border border-xlys-light-gray rounded-sm text-sm bg-white outline-none focus:border-xlys-red"
+              maxLength={20}
             />
+            <button
+              onClick={handleSearch}
+              className="absolute right-0 top-0 h-8 w-8 bg-xlys-red-dark hover:bg-xlys-red flex items-center justify-center cursor-pointer"
+              aria-label="搜索"
+            >
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+          </div>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="lg:hidden text-white p-4 focus:outline-none"
+            aria-label={mobileOpen ? '关闭菜单' : '打开菜单'}
+          >
+            <svg className="w-16 h-16 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d={mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      {/* 手机搜索框：位于红色功能条内第二行 */}
+      <div className="lg:hidden mt-2 relative">
+        <input
+          type="text"
+          placeholder="请输入关键字"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="w-full h-28 px-4 border border-xlys-light-gray rounded-sm text-lg bg-white outline-none focus:border-xlys-red"
+          maxLength={20}
+        />
+        <button
+          onClick={handleSearch}
+          className="absolute right-0 top-0 h-28 w-28 bg-xlys-red-dark hover:bg-xlys-red flex items-center justify-center cursor-pointer"
+          aria-label="搜索"
+        >
+          <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </button>
       </div>
@@ -148,7 +205,7 @@ const Navigation: React.FC = () => {
                   <Link
                     to={item.href}
                     onClick={closeMobile}
-                    className="flex-1 block px-5 py-3 text-white text-sm font-medium"
+                    className="flex-1 block px-5 py-3 text-white text-sm font-bold"
                   >
                     {item.name}
                   </Link>
@@ -158,7 +215,7 @@ const Navigation: React.FC = () => {
                       className="px-4 py-3 text-white/80 focus:outline-none"
                       aria-label={`展开${item.name}子菜单`}
                     >
-                      <svg className="w-8 h-8 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-10 h-10 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
