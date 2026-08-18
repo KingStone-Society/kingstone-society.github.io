@@ -37,7 +37,7 @@ const BottomModules: React.FC = () => {
             </a>
           </div>
           <div className="relative">
-            <div className="w-full h-40 sm:h-32 img-placeholder">
+            <div className="w-full aspect-video img-placeholder">
               <span className="text-xs">待办</span>
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-2">

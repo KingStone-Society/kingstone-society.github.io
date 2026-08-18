@@ -20,7 +20,7 @@ const MemberNews: React.FC = () => {
       {memberArticles.length > 0 ? (
         <>
           <div className="flex gap-6 lg:gap-3 mb-8 lg:mb-4">
-            <div className="w-64 h-64 sm:w-24 sm:h-24 flex-shrink-0 overflow-hidden">
+            <div className="w-[512px] h-[512px] sm:w-48 sm:h-48 flex-shrink-0 overflow-hidden">
               {memberArticles[0].headerImg ? (
                 <img src={memberArticles[0].headerImg} alt={memberArticles[0].title} className="w-full h-full object-cover" />
               ) : (

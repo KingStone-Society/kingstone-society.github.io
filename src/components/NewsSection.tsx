@@ -26,11 +26,11 @@ const NewsSection: React.FC = () => {
               <img
                 src={featuredArticle.headerImg}
                 alt={featuredArticle.title}
-                className="w-48 h-40 sm:w-20 sm:h-16 object-cover rounded"
+                className="w-96 h-80 sm:w-40 sm:h-32 object-cover rounded"
               />
             </Link>
           ) : (
-            <div className="w-48 h-40 sm:w-20 sm:h-16 flex-shrink-0 img-placeholder rounded flex items-center justify-center">
+            <div className="w-96 h-80 sm:w-40 sm:h-32 flex-shrink-0 img-placeholder rounded flex items-center justify-center">
               <span className="text-xs section-meta">首图</span>
             </div>
           )}
@@ -63,7 +63,7 @@ const NewsSection: React.FC = () => {
           rel="noopener noreferrer"
           className="flex flex-col items-center hover:opacity-80 transition-opacity"
         >
-          <img src="/logo-ssjg.png" alt="学校官网" className="h-24 sm:h-10 w-auto object-contain mb-2" />
+          <img src="/logo-ssjg.png" alt="学校官网" className="h-48 sm:h-20 w-auto object-contain mb-2" />
           <span className="text-xs text-xlys-gray link-text-2x">学校官网</span>
         </a>
         <a
@@ -72,7 +72,7 @@ const NewsSection: React.FC = () => {
           rel="noopener noreferrer"
           className="flex flex-col items-center hover:opacity-80 transition-opacity"
         >
-          <img src="/logo-XCL.jpg" alt="星川庐" className="h-24 sm:h-10 w-auto object-contain mb-2" />
+          <img src="/logo-XCL.jpg" alt="星川庐" className="h-48 sm:h-20 w-auto object-contain mb-2" />
           <span className="text-xs text-xlys-gray link-text-2x">钱牧风个人博客</span>
         </a>
       </div>

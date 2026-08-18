@@ -74,30 +74,31 @@ body {
     line-height: 70px;
   }
 
-  /* 板块内容（金石资讯/社员动态/学术资源）：全部字面放大两倍 */
+  /* 板块内容（金石资讯/社员动态/学术资源）：标题/更多/列表适当缩小，时间行保持 */
   .section-title {
-    font-size: 84px;
-    line-height: 100px;
+    font-size: 60px;
+    line-height: 76px;
   }
   .section-more {
-    font-size: 68px;
-    line-height: 84px;
+    font-size: 44px;
+    line-height: 60px;
   }
   .section-list {
-    font-size: 68px;
-    line-height: 88px;
+    font-size: 48px;
+    line-height: 64px;
   }
+  /* 时间/作者行：保持不动 */
   .section-meta {
     font-size: 56px;
     line-height: 76px;
   }
   .section-tag {
-    font-size: 56px;
-    line-height: 76px;
+    font-size: 44px;
+    line-height: 60px;
   }
-  /* 底部 logo 链接文字：字面放大两倍 */
+  /* 底部 logo 链接文字：缩小一倍 */
   .link-text-2x {
-    font-size: 88px;
-    line-height: 104px;
+    font-size: 44px;
+    line-height: 60px;
   }
 }
