@@ -14,9 +14,9 @@ const AcademicResources: React.FC = () => {
 
   return (
     <div className="w-full lg:w-[343px] p-4">
-      <div className="flex flex-wrap items-center gap-4 mb-8 lg:gap-2 lg:mb-4">
-        <h3 className="text-xlys-dark font-bold text-lg section-title flex-shrink-0">学术资源</h3>
-        <Link to="/academic" className="text-xlys-red text-sm section-more flex items-center flex-shrink-0">
+      <div className="flex flex-wrap items-center gap-4 mb-4">
+        <h3 className="text-xlys-dark font-bold text-xl lg:text-lg flex-shrink-0">学术资源</h3>
+        <Link to="/academic" className="text-xlys-red text-sm flex items-center flex-shrink-0">
           <span>更多</span>
           <span className="ml-1">&gt;&gt;</span>
         </Link>
@@ -26,10 +26,10 @@ const AcademicResources: React.FC = () => {
           <ul className="space-y-4 lg:space-y-2">
             {seminarArticles.map((item, index) => (
               <li key={index} className="flex items-start">
-                <Link to="/academic" className="text-xlys-red text-xs section-tag mr-4 lg:mr-2 flex-shrink-0">[研讨文集]</Link>
+                <Link to="/academic" className="text-xlys-red text-xs mr-2 flex-shrink-0">[研讨文集]</Link>
                 <Link
                   to={getArticleUrl(item.filename)}
-                  className="text-xlys-dark text-sm section-list hover:text-xlys-red truncate"
+                  className="text-xlys-dark text-sm hover:text-xlys-red truncate"
                 >
                   {item.title}
                 </Link>
@@ -39,10 +39,10 @@ const AcademicResources: React.FC = () => {
           <ul className="space-y-4 lg:space-y-2">
             {journalArticles.map((item, index) => (
               <li key={index} className="flex items-start">
-                <Link to="/journal" className="text-xlys-brown text-xs section-tag mr-4 lg:mr-2 flex-shrink-0">[金石艺丛]</Link>
+                <Link to="/journal" className="text-xlys-brown text-xs mr-2 flex-shrink-0">[金石艺丛]</Link>
                 <Link
                   to={getArticleUrl(item.filename)}
-                  className="text-xlys-dark text-sm section-list hover:text-xlys-red truncate"
+                  className="text-xlys-dark text-sm hover:text-xlys-red truncate"
                 >
                   {item.title}
                 </Link>

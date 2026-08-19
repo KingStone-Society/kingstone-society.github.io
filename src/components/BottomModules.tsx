@@ -53,7 +53,7 @@ const BottomModules: React.FC = () => {
         <div className="grid grid-cols-2 gap-2 p-2">
           {exhibitionItems.map((_item, index) => (
             <div key={index} className="relative">
-              <div className="w-full h-36 sm:h-28 img-placeholder">
+              <div className="w-full h-28 sm:h-28 img-placeholder">
                 <span className="text-xs">待办</span>
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-1">

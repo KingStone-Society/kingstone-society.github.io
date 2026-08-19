@@ -106,15 +106,15 @@ const Banner: React.FC = () => {
         ))}
       </div>
       {/* 底部文字 + 右侧圆点进度条，垂直对齐 */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-2 sm:py-2 flex items-center justify-between">
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-2 flex items-center justify-between">
         <span className="text-white text-sm line-clamp-1">{bannerData[currentIndex]?.title}</span>
-        <div className="flex space-x-4 sm:space-x-3">
+        <div className="flex space-x-3">
           {bannerData.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`h-4 sm:h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'bg-white w-16 sm:w-8' : 'bg-white/40 w-4 sm:w-2'
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === currentIndex ? 'bg-white w-8' : 'bg-white/40 w-2'
               }`}
             />
           ))}

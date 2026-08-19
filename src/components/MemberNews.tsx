@@ -10,9 +10,9 @@ const MemberNews: React.FC = () => {
 
   return (
     <div className="w-full lg:w-[473px] p-4">
-      <div className="flex flex-wrap items-center gap-4 mb-8 lg:gap-2 lg:mb-4">
-        <h3 className="text-xlys-dark font-bold text-lg section-title flex-shrink-0">社员动态</h3>
-        <Link to="/news/member" className="text-xlys-red text-sm section-more flex items-center flex-shrink-0">
+      <div className="flex flex-wrap items-center gap-4 mb-4">
+        <h3 className="text-xlys-dark font-bold text-xl lg:text-lg flex-shrink-0">社员动态</h3>
+        <Link to="/news/member" className="text-xlys-red text-sm flex items-center flex-shrink-0">
           <span>更多</span>
           <span className="ml-1">&gt;&gt;</span>
         </Link>
@@ -20,7 +20,7 @@ const MemberNews: React.FC = () => {
       {memberArticles.length > 0 ? (
         <>
           <div className="flex gap-6 lg:gap-3 mb-8 lg:mb-4">
-            <div className="w-[512px] h-[512px] sm:w-48 sm:h-48 flex-shrink-0 overflow-hidden">
+            <div className="w-28 h-28 sm:w-48 sm:h-48 flex-shrink-0 overflow-hidden">
               {memberArticles[0].headerImg ? (
                 <img src={memberArticles[0].headerImg} alt={memberArticles[0].title} className="w-full h-full object-cover" />
               ) : (
@@ -30,10 +30,10 @@ const MemberNews: React.FC = () => {
               )}
             </div>
             <div className="flex-1">
-              <h4 className="text-xlys-dark font-bold text-sm section-list mb-2 lg:mb-1 line-clamp-1">
+              <h4 className="text-xlys-dark font-bold text-sm mb-1 line-clamp-1">
                 <Link to={getArticleUrl(memberArticles[0].filename)} className="hover:text-xlys-red">{memberArticles[0].title}</Link>
               </h4>
-              <p className="text-xlys-gray text-xs section-meta line-clamp-3">
+              <p className="text-xlys-gray text-xs line-clamp-3">
                 {memberArticles[0].subtitle || '点击查看详情'}
               </p>
             </div>
@@ -43,7 +43,7 @@ const MemberNews: React.FC = () => {
               <li key={index} className="break-inside-avoid">
                 <Link
                   to={getArticleUrl(item.filename)}
-                  className="text-xlys-dark text-sm section-list hover:text-xlys-red block truncate"
+                  className="text-xlys-dark text-sm hover:text-xlys-red block truncate"
                 >
                   {item.title}
                 </Link>
