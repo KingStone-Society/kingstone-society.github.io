@@ -52,7 +52,7 @@ const AcademicResources: React.FC = () => {
         </div>
       ) : (
         <div className="text-center text-xlys-gray py-10">
-          <p>暂无文章，请上传文章到 public/articles 目录</p>
+          <p>暂无文章，请管理员上传文章到 public/articles 目录</p>
         </div>
       )}
     </div>
