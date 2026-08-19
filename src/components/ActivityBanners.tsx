@@ -25,7 +25,7 @@ const ActivityBanners: React.FC = () => {
           to={`/search?q=${encodeURIComponent(banner.searchQuery)}`}
           className="flex items-center justify-center h-12 sm:h-14 bg-gradient-to-r from-xlys-red to-xlys-red-dark text-white font-bold text-sm text-center px-3 hover:opacity-90 transition-opacity edge-activity-banner"
         >
-          {banner.title}
+          <span className="block w-full truncate">{banner.title}</span>
         </Link>
       ))}
     </div>

@@ -99,10 +99,11 @@ body {
   html.edge-mobile .edge-submenu-icon { width: 40px; height: 40px; }
   html.edge-mobile .edge-submenu-link { padding-left: 32px; padding-right: 32px; }
 
-  html.edge-mobile .edge-link-logo { height: 288px; }
-  html.edge-mobile .edge-link-text { font-size: 44px; line-height: 60px; }
+  html.edge-mobile .edge-link-logo { height: 96px; }
+  html.edge-mobile .edge-link-text { font-size: 28px; line-height: 40px; }
+  html.edge-mobile .edge-link-row { gap: 8px 16px; }
 
-  html.edge-mobile .edge-activity-banner { height: 64px; }
+  html.edge-mobile .edge-activity-banner { height: 56px; font-size: 24px; line-height: 32px; white-space: nowrap; }
 
   html.edge-mobile .edge-banner-dot { height: 16px; }
   html.edge-mobile .edge-banner-dot.w-8 { width: 64px; }
