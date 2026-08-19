@@ -84,4 +84,27 @@ body {
   html.edge-mobile .prose th {
     font-size: 32px;
   }
+
+  /* Edge 移动端：恢复顶部导航栏、搜索栏、友情链接、活动横幅的大尺寸布局 */
+  html.edge-mobile .edge-nav-logo { width: 64px; height: 64px; }
+  html.edge-mobile .edge-nav-title { height: 56px; }
+  html.edge-mobile .edge-nav-menu-btn { padding: 16px; }
+  html.edge-mobile .edge-nav-menu-icon { width: 64px; height: 64px; }
+
+  html.edge-mobile .edge-search-input { height: 112px; padding-left: 16px; padding-right: 16px; }
+  html.edge-mobile .edge-search-btn { height: 112px; width: 112px; }
+  html.edge-mobile .edge-search-icon { width: 48px; height: 48px; }
+
+  html.edge-mobile .edge-mobile-nav-link { padding-left: 20px; padding-right: 20px; }
+  html.edge-mobile .edge-submenu-icon { width: 40px; height: 40px; }
+  html.edge-mobile .edge-submenu-link { padding-left: 32px; padding-right: 32px; }
+
+  html.edge-mobile .edge-link-logo { height: 288px; }
+  html.edge-mobile .edge-link-text { font-size: 44px; line-height: 60px; }
+
+  html.edge-mobile .edge-activity-banner { height: 64px; }
+
+  html.edge-mobile .edge-banner-dot { height: 16px; }
+  html.edge-mobile .edge-banner-dot.w-8 { width: 64px; }
+  html.edge-mobile .edge-banner-dot.w-2 { width: 16px; }
 }

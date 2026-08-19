@@ -113,7 +113,7 @@ const Banner: React.FC = () => {
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all duration-300 edge-banner-dot ${
                 index === currentIndex ? 'bg-white w-8' : 'bg-white/40 w-2'
               }`}
             />

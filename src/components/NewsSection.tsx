@@ -63,8 +63,8 @@ const NewsSection: React.FC = () => {
           rel="noopener noreferrer"
           className="flex flex-col items-center hover:opacity-80 transition-opacity"
         >
-          <img src="/logo-ssjg.png" alt="学校官网" className="h-10 w-auto object-contain mb-2" />
-          <span className="text-xs text-xlys-gray">学校官网</span>
+          <img src="/logo-ssjg.png" alt="学校官网" className="h-10 w-auto object-contain mb-2 edge-link-logo" />
+          <span className="text-xs text-xlys-gray edge-link-text">学校官网</span>
         </a>
         <a
           href="https://qian-mf.github.io/"
@@ -72,8 +72,8 @@ const NewsSection: React.FC = () => {
           rel="noopener noreferrer"
           className="flex flex-col items-center hover:opacity-80 transition-opacity"
         >
-          <img src="/logo-XCL.jpg" alt="星川庐" className="h-10 w-auto object-contain mb-2" />
-          <span className="text-xs text-xlys-gray">钱牧风个人博客</span>
+          <img src="/logo-XCL.jpg" alt="星川庐" className="h-10 w-auto object-contain mb-2 edge-link-logo" />
+          <span className="text-xs text-xlys-gray edge-link-text">钱牧风个人博客</span>
         </a>
       </div>
     </div>
