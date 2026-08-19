@@ -99,9 +99,9 @@ body {
   html.edge-mobile .edge-submenu-icon { width: 40px; height: 40px; }
   html.edge-mobile .edge-submenu-link { padding-left: 32px; padding-right: 32px; }
 
-  html.edge-mobile .edge-link-logo { height: 142px; width: 142px; max-width: none; }
+  html.edge-mobile .edge-link-logo { height: 60px; width: auto; max-width: none; }
   html.edge-mobile .edge-link-text { font-size: 28px; line-height: 40px; }
-  html.edge-mobile .edge-link-row { gap: 8px 16px; }
+  html.edge-mobile .edge-link-row { gap: 8px; }
 
   html.edge-mobile .edge-activity-banner { height: 76px; font-size: 22px; line-height: 32px; }
   html.edge-mobile .edge-activity-banner span { white-space: normal; overflow: visible; text-overflow: clip; }
