@@ -85,7 +85,15 @@ const Navigation: React.FC = () => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <div className="flex items-center">
+        <Link
+          to="/"
+          onClick={() => {
+            closeMobile();
+            window.scrollTo({ top: 0, behavior: 'auto' });
+          }}
+          className="flex items-center cursor-pointer"
+          aria-label="返回首页"
+        >
           <div className="w-12 h-12 mr-2 edge-nav-logo">
             <img
               src="/logo.png"
@@ -98,7 +106,7 @@ const Navigation: React.FC = () => {
             alt="金石篆刻社"
             className="h-10 w-auto object-contain edge-nav-title"
           />
-        </div>
+        </Link>
         <nav className="hidden lg:flex items-center space-x-1">
           {navItems.map((item, index) => (
             <div
