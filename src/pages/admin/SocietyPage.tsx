@@ -110,12 +110,6 @@ const SocietyPage: React.FC = () => {
                 </div>
                 <p className="text-xlys-gray text-xs mt-2">第二代社徽</p>
               </div>
-              <div className="text-center">
-                <div className="w-32 h-32 bg-xlys-beige">
-                  <img src="/images/static/emblem3.png" alt="第三代社徽" className="w-full h-full object-contain" />
-                </div>
-                <p className="text-xlys-gray text-xs mt-2">第三代社徽</p>
-              </div>
             </div>
           </div>
         </div>
