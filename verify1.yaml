@@ -1,0 +1,16 @@
+- generic [ref=e3]:
+  - generic [ref=e4]: 印
+  - heading "管理后台" [level=1] [ref=e5]
+  - paragraph [ref=e6]: 金石篆刻社
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]: 管理员账号
+      - textbox "管理员账号" [ref=e10]:
+        - /placeholder: 请输入账号
+    - generic [ref=e11]:
+      - generic [ref=e12]: 密码
+      - textbox "密码" [ref=e13]:
+        - /placeholder: 请输入密码
+    - button "登 录" [ref=e14] [cursor=pointer]
+  - link "← 返回首页" [ref=e15]:
+    - /url: /

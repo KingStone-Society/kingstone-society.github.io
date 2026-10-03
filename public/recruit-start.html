@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>金石篆刻社 :// 招新终端 // START</title>
+<style>
+:root{
+  --bg:#0a0a0a;
+  --bg-soft:#121212;
+  --ink:#e8e8e8;
+  --ink-dim:#888888;
+  --vermilion:#9E2B1A;
+  --ghost:#2A2A2A;
+  --font-zh:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Source Han Sans CN",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+html{background:var(--bg);color:var(--ink);font-family:var(--font-zh);line-height:1.5;-webkit-font-smoothing:antialiased}
+body{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;background:none;border:none;color:inherit;cursor:pointer}
+
+/* ====== Loading ====== */
+.loading{
+  position:fixed;inset:0;z-index:200;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:24px;
+  transition:opacity .55s ease,visibility .55s;
+}
+.loading.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loading-brand{
+  font-size:30px;font-weight:900;letter-spacing:.18em;
+}
+.loading-brand .slash{color:var(--vermilion);margin-left:6px}
+.loading-bar{
+  width:240px;height:1px;background:var(--ghost);position:relative;overflow:hidden;
+}
+.loading-bar::after{
+  content:'';position:absolute;left:0;top:0;height:100%;width:var(--p,0%);
+  background:var(--vermilion);transition:width .18s linear;
+}
+.loading-meta{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--ink-dim);
+}
+.loading-meta b{color:var(--vermilion);font-weight:600}
+
+/* ====== Topbar ====== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:36px;
+  background:var(--bg-soft);
+  border-bottom:1px solid var(--ghost);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 28px;z-index:100;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:1px;
+  color:var(--ink-dim);
+}
+.topbar .slash{color:var(--vermilion);margin:0 4px}
+.topbar-left b{color:var(--ink);font-weight:600;letter-spacing:2px}
+.topbar-mid{font-size:11px}
+.topbar-mid .recruiting{color:var(--vermilion)}
+.topbar-mid .pulse{
+  display:inline-block;width:6px;height:6px;background:var(--vermilion);
+  margin-right:8px;vertical-align:middle;animation:blink 1.5s infinite;
+}
+.topbar-right{text-align:right}
+.topbar-right b{color:var(--ink);font-weight:600}
+@keyframes blink{50%{opacity:.35}}
+
+/* ====== Stage ====== */
+.stage{
+  position:fixed;top:36px;left:0;
+  width:100vw;height:calc(100vh - 36px);overflow:hidden;
+}
+.panel-hero{
+  height:100%;width:100vw;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 6vw 8vh;
+}
+
+/* ====== 入场动画 ====== */
+[data-reveal]{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+[data-reveal].reveal-in{opacity:1;transform:translateY(0)}
+.press-key.reveal-in{transform:translate(-50%,-50%) translateY(-40%)}
+
+/* ====== Hero ====== */
+.hero-text{max-width:65%}
+.hero-pretitle{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:4px;
+  color:var(--ink-dim);margin-bottom:24px;
+}
+.hero-pretitle .slash{color:var(--vermilion);margin:0 4px}
+.hero-pretitle b{color:var(--ink);font-weight:600;letter-spacing:2px}
+.hero-title{
+  font-size:clamp(56px,11vw,180px);font-weight:900;
+  letter-spacing:.04em;line-height:.95;
+}
+.hero-title .slash{color:var(--vermilion)}
+.hero-title .ch{display:inline-block;vertical-align:baseline}
+.hero-title .ch.settled{animation:chSettle .42s cubic-bezier(.2,.9,.3,1)}
+.hero-title .dot{color:var(--vermilion)}
+@keyframes chSettle{
+  0%{transform:translateY(7%) scale(.84);opacity:.4}
+  55%{color:var(--vermilion)}
+  100%{transform:none;opacity:1}
+}
+.hero-en{
+  font-family:var(--font-mono);font-size:13px;letter-spacing:5px;
+  color:var(--ink-dim);margin-top:22px;text-transform:uppercase;
+}
+.hero-face{
+  position:absolute;left:64vw;top:5vh;
+  width:min(24vw,360px);aspect-ratio:1/1;
+  /* 方框：只淡入，不上浮（覆盖 data-reveal 的位移） */
+  opacity:0;transform:none;transition:opacity .65s ease;
+}
+.hero-face.reveal-in{opacity:1;transform:none}
+.hero-watermark{
+  position:absolute;left:4vw;top:5vh;
+  font-family:var(--font-zh);
+  font-size:clamp(96px,18vw,280px);
+  font-weight:900;letter-spacing:.04em;line-height:1;
+  color:var(--ink);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.35) 45%,transparent 92%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.35) 45%,transparent 92%);
+  pointer-events:none;user-select:none;z-index:0;
+}
+.hero-face svg{width:100%;height:100%;overflow:visible;animation:breathe 6s ease-in-out infinite}
+.hero-face svg rect.bar{shape-rendering:crispEdges}
+/* 条纹淡入：出现时较淡，慢慢加深至完全显现 */
+#sealGlitch{opacity:.25;transition:opacity 1.4s ease}
+#sealGlitch.on{opacity:1}
+.hero-divider{
+  position:absolute;left:54vw;top:16vh;bottom:16vh;width:1px;
+  background:var(--ghost);pointer-events:none;
+  opacity:0;transition:opacity .35s linear;
+}
+.hero-divider.show{opacity:1}
+.hero-divider::before{
+  content:'';position:absolute;left:0;top:0;width:1px;height:60px;
+  background:var(--vermilion);
+  animation:divscan 5s ease-in-out infinite;
+}
+@keyframes divscan{0%,100%{top:0}50%{top:calc(100% - 60px)}}
+.hero-video{
+  position:absolute;right:6vw;bottom:9vh;
+  width:min(38vw,520px);aspect-ratio:16/9;
+  border:1px solid var(--ghost);background:#000;overflow:hidden;
+  display:block;cursor:pointer;
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path .95s cubic-bezier(.7,0,.2,1);
+}
+.hero-video.revealed{clip-path:inset(0 0 0 0)}
+.hero-video video{width:100%;height:100%;display:block;object-fit:cover;border:0}
+.hero-video-link{
+  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:3px;
+  color:var(--ink);padding:8px 14px;text-align:center;line-height:1.9;white-space:normal;
+  border:1px solid var(--ink);background:rgba(0,0,0,.6);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.hero-video:hover .hero-video-link{opacity:1}
+@keyframes breathe{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* ====== 按任意键继续 ====== */
+.press-key{
+  position:absolute;left:54vw;top:47%;
+  transform:translate(-50%,-50%) translateY(calc(-40% + 16px));
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  cursor:pointer;z-index:20;
+  transition:opacity .65s ease,transform .65s ease;
+}
+.press-key-box{
+  border:1px solid var(--ink);background:rgba(10,10,10,.72);
+  padding:14px 34px;
+  font-size:16px;font-weight:700;letter-spacing:8px;text-indent:8px;
+  animation:pkPulse 1.6s ease-in-out infinite;
+}
+.press-key-box .caret{
+  display:inline-block;width:.6em;color:var(--vermilion);
+  animation:pkCaret .9s steps(1) infinite;
+}
+.press-key-en{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:4px;
+  color:var(--ink-dim);text-transform:uppercase;
+}
+@keyframes pkPulse{
+  0%,100%{border-color:var(--ink)}
+  50%{border-color:var(--vermilion)}
+}
+@keyframes pkCaret{50%{opacity:0}}
+
+/* ====== 打字机光标 / 印章矩形入场 / 红线 ====== */
+.hero-caret{
+  position:absolute;left:0;top:0;width:1px;height:1em;
+  background:var(--ink);z-index:6;pointer-events:none;opacity:0;
+  transition:background .6s linear,opacity .35s ease;
+}
+.hero-caret.typing{opacity:1;animation:caretBlink .68s steps(1,end) infinite}
+.hero-caret.move-x{
+  opacity:1;background:var(--ghost);animation:none;
+  transition:left .5s linear,background .5s linear,opacity .35s ease;
+}
+.hero-caret.stretch{
+  transition:top .55s linear,height .55s linear,background .5s linear,opacity .35s ease;
+}
+@keyframes caretBlink{50%{opacity:.12}}
+.reveal-line{
+  position:absolute;left:0;top:0;width:2px;height:0;
+  background:var(--vermilion);z-index:8;pointer-events:none;opacity:0;
+  transition:top .4s cubic-bezier(.65,0,.35,1),height .4s cubic-bezier(.65,0,.35,1),opacity .3s ease;
+}
+/* on 状态去掉 opacity 过渡：出现即实色（height 为 0 时只是一个点），退场时才淡出；left 由 JS 逐帧驱动 */
+.reveal-line.on{opacity:1;transition:top .4s cubic-bezier(.65,0,.35,1),height .4s cubic-bezier(.65,0,.35,1)}
+
+/* ====== 屏底元素 ====== */
+.watermark{
+  position:fixed;bottom:22px;left:28px;z-index:50;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--ink-dim);
+}
+.watermark .slash{color:var(--vermilion);margin:0 4px}
+.watermark b{color:var(--ink);font-weight:600}
+
+/* ====== Mobile ====== */
+@media (max-width:768px){
+  .panel-hero{padding:calc(36px + 6vh) 6vw 8vh;justify-content:flex-start}
+  .hero-text{max-width:100%}
+  .hero-face{position:static;transform:none;width:50vw;max-width:240px;margin:30px auto 0}
+  .hero-divider{display:none}
+  .hero-video{position:static;width:100%;max-width:520px;margin:30px auto 0;aspect-ratio:16/9}
+  .press-key{position:static;transform:none;margin:34px auto 0}
+  .press-key.reveal-in{transform:none}
+  .watermark{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading" id="loading">
+  <div class="loading-brand">KINGSTONE<span class="slash">://</span></div>
+  <div class="loading-bar"></div>
+  <div class="loading-meta"><b id="loadingPct">000</b> / 100 LOADING…</div>
+</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-left">金石篆刻社团<span class="slash">://</span><b>KINGSTONE SOCIETY</b></div>
+  <div class="topbar-mid" id="topbarMid"></div>
+  <div class="topbar-right"><span id="curDate"></span> <b>//</b> <span id="curTime"></span></div>
+</div>
+
+<!-- Stage：仅保留首页 -->
+<main class="stage">
+  <section class="panel-hero">
+    <div class="hero-watermark" id="heroWatermark" aria-hidden="true"><span id="ssjgText"></span></div>
+    <div class="hero-divider" id="heroDivider" aria-hidden="true"></div>
+    <span class="hero-caret" id="heroCaret" aria-hidden="true"></span>
+    <div class="hero-text">
+      <div class="hero-pretitle" data-reveal>上师嘉高 <span class="slash">://</span> <b>KINGSTONE SOCIETY</b></div>
+      <h1 class="hero-title" id="heroTitle"><span class="ch">金</span><span class="ch">石</span><span class="ch">篆</span><span class="ch">刻</span><br><span class="ch">社</span><span class="ch dot">。</span></h1>
+      <div class="hero-en" data-reveal>EST. 2023 // SEAL · CARVE · TRACE</div>
+    </div>
+    <div class="hero-face" data-reveal aria-hidden="true">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="40" width="320" height="320" fill="none" stroke="#9E2B1A" stroke-width="1.6"/>
+          <g id="sealGlitch"></g>
+        </svg>
+    </div>
+    <span class="reveal-line" id="revealLine" aria-hidden="true"></span>
+    <a class="hero-video" id="heroVideo" href="https://www.bilibili.com/video/BV15zeC6NEhZ/" target="_blank" rel="noopener">
+      <video autoplay muted loop playsinline preload="auto" poster="http://i1.hdslb.com/bfs/archive/5e76641a72933793d0372281341bd152b1d4ea08.jpg" src="https://upos-sz-mirrorbd.bilivideo.com/upgcxcode/48/58/41991145848/41991145848-1-192.mp4?e=ig8euxZM2rNcNbR17zdVhwdlhWRahwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&amp;mid=0&amp;deadline=1790673480&amp;gen=playurlv3&amp;os=bdbv&amp;nbs=1&amp;oi=2362416134&amp;platform=html5&amp;uipk=5&amp;trid=d833dbb6898a4672af5725e1cdb82a1h&amp;og=hw&amp;upsig=6bc1625e454b5aa30bf86380f5065e0b&amp;uparams=e,mid,deadline,gen,os,nbs,oi,platform,uipk,trid,og&amp;bvc=vod&amp;nettype=0&amp;bw=938232&amp;lrs=-1&amp;agrr=1&amp;buvid=&amp;build=0&amp;dl=0&amp;f=h_0_0&amp;orderid=0,1"></video>
+      <span class="hero-video-link" aria-hidden="true">社团宣传片<br>VIEW ON BILIBILI →</span>
+    </a>
+    <a class="press-key" id="pressKey" data-reveal href="https://kingstone-society.github.io/">
+      <div class="press-key-box">点此继续<span class="caret">▍</span></div>
+      <div class="press-key-en">CLICK TO CONTINUE</div>
+    </a>
+  </section>
+</main>
+
+<!-- 屏底元素 -->
+<div class="watermark">金石篆刻社团<span class="slash">://</span><b>KINGSTONE.SOCIETY</b></div>
+
+<script>
+const data = {
+  startYear: 2023,
+  recruitMonths: [8, 9, 10],
+  recruitDeadline: "10-31"
+};
+
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth() + 1;
+
+// 实时时钟：精确到秒
+function updateClock() {
+  const n = new Date();
+  document.getElementById('curDate').textContent =
+    `${n.getFullYear()} // ${String(n.getMonth() + 1).padStart(2,'0')} / ${String(n.getDate()).padStart(2,'0')}`;
+  document.getElementById('curTime').textContent =
+    `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')}`;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+(function () {
+  const bar = document.getElementById('topbarMid');
+  const inRecruit = data.recruitMonths.includes(currentMonth);
+  if (!inRecruit) {
+    let nextYear = currentYear;
+    if (currentMonth > Math.max.apply(null, data.recruitMonths)) {
+      nextYear = currentYear + 1;
+    }
+    bar.innerHTML =
+      `NEXT RECRUIT <span class="vermilion">//</span> ${nextYear}.${String(Math.min.apply(null, data.recruitMonths)).padStart(2,'0')}`;
+  }
+  // 招新期间中间栏不再显示倒计时
+})();
+
+/* ====== Loading 流程 ====== */
+const loadingEl = document.getElementById('loading');
+const loadingPctEl = document.getElementById('loadingPct');
+const loadingBarEl = loadingEl.querySelector('.loading-bar');
+let pct = 0;
+const loadTimer = setInterval(() => {
+  pct += Math.random() * 14 + 5;
+  if (pct >= 100) {
+    pct = 100;
+    clearInterval(loadTimer);
+    setTimeout(() => {
+      loadingEl.classList.add('hide');
+      revealHero();
+      startIntro();
+    }, 180);
+  }
+  loadingPctEl.textContent = String(Math.floor(pct)).padStart(3, '0');
+  loadingBarEl.style.setProperty('--p', pct + '%');
+}, 110);
+
+function revealHero() {
+  const els = document.querySelectorAll('.hero-pretitle, .hero-en');
+  els.forEach((el, i) => {
+    el.style.transitionDelay = (90 * i) + 'ms';
+    el.classList.add('reveal-in');
+  });
+  setTimeout(() => {
+    els.forEach(el => el.style.transitionDelay = '');
+  }, els.length * 90 + 700);
+}
+
+/* ====== 首屏开场：SSJG 打字机 + 标题翻牌 + 光标变竖线 ====== */
+const SSJG = 'SSJG';
+const panelEl = document.querySelector('.panel-hero');
+const watermarkEl = document.getElementById('heroWatermark');
+const ssjgEl = document.getElementById('ssjgText');
+const caretEl = document.getElementById('heroCaret');
+const dividerEl = document.getElementById('heroDivider');
+const titleEl = document.getElementById('heroTitle');
+const pressKeyEl = document.getElementById('pressKey');
+const videoEl = document.getElementById('heroVideo');
+const heroFaceEl = document.querySelector('.hero-face');
+const revealLineEl = document.getElementById('revealLine');
+
+const CH_POOL = '金石篆刻社印文方寸朱白阴阳秦汉明清篆隶楷行刀法冲切边款拓稿拙巧稳'.split('');
+const SYM_POOL = ['。', '，', '、', '；', '：', '？', '！', '…', '·', '—', '「', '」', '《', '》', '（', '）'];
+const chEls = Array.from(titleEl.querySelectorAll('.ch'));
+// 先记录最终字形，再撒一把乱码，避免首帧露出正确字形
+chEls.forEach(el => {
+  el.dataset.final = el.textContent;
+  el.textContent = el.classList.contains('dot')
+    ? SYM_POOL[Math.floor(Math.random() * SYM_POOL.length)]
+    : CH_POOL[Math.floor(Math.random() * CH_POOL.length)];
+});
+
+const INTRO = (function () {
+  const typeStart = 160, typeStep = 250, tail = 380, resolveStep = 300;
+  const typeDone = typeStart + (SSJG.length - 1) * typeStep + tail;
+  const lastSettle = typeDone + (chEls.length - 1) * resolveStep;
+  return {
+    typeStart, typeStep, typeDone, resolveStep,
+    // 打字/翻牌/光标变线全部结束后，自动开始红线→宣传片→印章序列
+    revealAt: Math.max(lastSettle + 420, typeDone + 1650)
+  };
+})();
+
+let introT0 = 0;
+let typedCount = -1;
+let caretStopped = false;
+const flipAt = chEls.map(() => 0);
+
+function panelRect() { return panelEl.getBoundingClientRect(); }
+
+function placeCaret() {
+  const p = panelRect();
+  const r = watermarkEl.getBoundingClientRect();
+  const fs = parseFloat(getComputedStyle(watermarkEl).fontSize);
+  if (!r.width) return;
+  caretEl.style.height = (fs * 0.78).toFixed(1) + 'px';
+  caretEl.style.top = (r.top - p.top + fs * 0.11).toFixed(1) + 'px';
+  caretEl.style.left = (r.right - p.left + fs * 0.05).toFixed(1) + 'px';
+  caretEl.classList.add('typing');
+}
+
+// 打字结束：光标先横向平移到竖线位置，再原地拉长成那条竖线
+function morphCaret() {
+  caretEl.classList.remove('typing');
+  const p = panelRect();
+  const d = dividerEl.getBoundingClientRect();
+  if (!d.height) { caretEl.style.opacity = 0; return; }
+  // 阶段一：只做横向移动（left 线性过渡，其余属性不动）
+  caretEl.classList.add('move-x');
+  requestAnimationFrame(() => {
+    caretEl.style.left = (d.left - p.left).toFixed(1) + 'px';
+  });
+  // 阶段二：横向到位后，再拉长成整条竖线
+  setTimeout(() => {
+    caretEl.classList.add('stretch');
+    caretEl.style.top = (d.top - p.top).toFixed(1) + 'px';
+    caretEl.style.height = d.height.toFixed(1) + 'px';
+    setTimeout(() => {
+      dividerEl.classList.add('show');
+      caretEl.style.opacity = 0;
+    }, 580);
+  }, 520);
+}
+
+function startIntro() {
+  introT0 = performance.now();
+  requestAnimationFrame(introFrame);
+  // 全自动连播：开场结束后自动执行显现序列
+  setTimeout(playReveal, INTRO.revealAt);
+}
+
+function introFrame(now) {
+  const t = now - introT0;
+
+  // 1) SSJG 逐字打字
+  const want = t < INTRO.typeStart ? 0
+    : Math.min(SSJG.length, Math.floor((t - INTRO.typeStart) / INTRO.typeStep) + 1);
+  if (want !== typedCount) {
+    typedCount = want;
+    ssjgEl.textContent = SSJG.slice(0, want);
+    if (want > 0) placeCaret();
+  }
+
+  // 2) 标题逐字翻牌：先高频乱码闪动，打字结束后再逐个慢速定格
+  chEls.forEach((el, i) => {
+    if (el.classList.contains('settled')) return;
+    if (t >= INTRO.typeDone + i * INTRO.resolveStep) {
+      el.textContent = el.dataset.final;
+      el.classList.add('settled');
+      return;
+    }
+    if (t >= INTRO.typeStart && t >= flipAt[i]) {
+      flipAt[i] = t + 60 + Math.random() * 70;
+      const pool = el.classList.contains('dot') ? SYM_POOL : CH_POOL;
+      el.textContent = pool[Math.floor(Math.random() * pool.length)];
+      el.animate(
+        [{ transform: 'translateY(-7%) scaleY(.84)', opacity: .55 }, { transform: 'none', opacity: 1 }],
+        { duration: 120, easing: 'linear' }
+      );
+    }
+  });
+
+  // 3) 光标停笔 → 先横移再拉长变成竖线
+  if (!caretStopped && t >= INTRO.typeDone) { caretStopped = true; morphCaret(); }
+  const allSettled = chEls.every(el => el.classList.contains('settled'));
+  if (!caretStopped || !allSettled) requestAnimationFrame(introFrame);
+}
+
+window.addEventListener('resize', () => { if (!caretStopped) placeCaret(); });
+
+/* ====== 第一次下移：红线显现宣传片 → 印章矩形从上方滑下 ====== */
+// 扫动缓动（与原 CSS cubic-bezier(.7,0,.2,1) 一致）：红线与视频揭示共用同一进度
+const SWEEP_EASE = (function () {
+  const cx = 3 * 0.7, bx = 3 * (0.2 - 0.7) - cx, ax = 1 - cx - bx;
+  const cy = 3 * 0, by = 3 * (1 - 0) - cy, ay = 1 - cy - by;
+  const sampleX = u => ((ax * u + bx) * u + cx) * u;
+  const sampleDX = u => (3 * ax * u + 2 * bx) * u + cx;
+  const sampleY = u => ((ay * u + by) * u + cy) * u;
+  return t => {
+    if (t <= 0) return 0;
+    if (t >= 1) return 1;
+    let u = t;
+    for (let i = 0; i < 8; i++) {
+      const e = sampleX(u) - t;
+      if (Math.abs(e) < 1e-5) break;
+      const d = sampleDX(u);
+      if (Math.abs(d) < 1e-6) break;
+      u -= e / d;
+    }
+    return sampleY(u);
+  };
+})();
+
+let revealed = false;
+function playReveal() {
+  if (revealed) return;
+  revealed = true;
+  const p = panelRect();
+  const v = videoEl.getBoundingClientRect();
+
+  if (!v.width || !v.height) {
+    videoEl.classList.add('revealed');
+    // 方框先淡入，淡入完成后条纹再开始流动
+    heroFaceEl.classList.add('reveal-in');
+    setTimeout(startSealBars, 700);
+    setTimeout(() => { pressKeyEl.classList.add('reveal-in'); }, 420);
+    return;
+  }
+
+  // 红线在分割线上从一点向上下展开成线（与宣传片等高，不淡入），再右移把窗口「扫」出来
+  const d = dividerEl.getBoundingClientRect();
+  const startX = (d.width ? d.left : v.left) - p.left;
+  // 关闭过渡写入起始位置并强制刷新，确保 left 不从 CSS 初始值（屏幕最左侧）起算
+  revealLineEl.style.transition = 'none';
+  revealLineEl.style.top = (v.top - p.top + v.height / 2).toFixed(1) + 'px';
+  revealLineEl.style.height = '0px';
+  revealLineEl.style.left = startX.toFixed(1) + 'px';
+  void revealLineEl.offsetWidth; /* 固化起点 */
+  revealLineEl.style.transition = '';
+  revealLineEl.classList.add('on'); /* 实色出现，此时高度为 0 即一个点 */
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    // 从中心点向上下展开成与窗口等高的竖线
+    revealLineEl.style.top = (v.top - p.top).toFixed(1) + 'px';
+    revealLineEl.style.height = v.height.toFixed(1) + 'px';
+  }));
+  // 展开完成后红线右移扫出宣传片；视频揭示逐帧跟随红线位置，扫到哪揭到哪，不抢跑
+  setTimeout(() => {
+    const endX = v.right - p.left - 2;
+    const vLeft = v.left - p.left;
+    const t0 = performance.now();
+    videoEl.style.transition = 'none'; /* 揭示改为逐帧驱动，禁用 CSS 过渡 */
+    (function sweep(now) {
+      const t = Math.min((now - t0) / 950, 1);
+      const x = startX + SWEEP_EASE(t) * (endX - startX);
+      revealLineEl.style.left = x.toFixed(1) + 'px';
+      const cut = Math.max(0, Math.min(1, (x - vLeft) / v.width));
+      videoEl.style.clipPath = `inset(0 ${((1 - cut) * 100).toFixed(2)}% 0 0)`;
+      if (t < 1) {
+        requestAnimationFrame(sweep);
+      } else {
+        videoEl.classList.add('revealed'); /* 收尾落位，恢复 CSS 状态 */
+        videoEl.style.transition = '';
+        videoEl.style.clipPath = '';
+        revealLineEl.classList.remove('on');
+        // 方框先淡入，淡入完成后条纹再开始流动
+        heroFaceEl.classList.add('reveal-in');
+        setTimeout(startSealBars, 700);
+        setTimeout(() => { pressKeyEl.classList.add('reveal-in'); }, 420);
+      }
+    })(performance.now());
+  }, 430);
+}
+
+window.addEventListener('wheel', (e) => {
+  if (e.deltaY > 0) playReveal();
+}, { passive: true });
+
+let swipeY = 0;
+window.addEventListener('touchstart', (e) => { swipeY = e.touches[0].clientY; }, { passive: true });
+window.addEventListener('touchend', (e) => {
+  if (e.changedTouches[0].clientY - swipeY < -60) playReveal();
+}, { passive: true });
+
+/* ====== 印面条纹流动（悬停避让）：宣传片揭示完成后启动 ====== */
+function startSealBars() {
+  const g = document.getElementById('sealGlitch');
+  if (!g || g.dataset.started) return;
+  g.dataset.started = '1';
+  g.classList.add('on'); /* 条纹淡入：由淡渐深 */
+  const svg = g.closest('svg');
+  const NS = 'http://www.w3.org/2000/svg';
+  const X0 = 40, SIZE = 320, BARS = 8;
+  const MOUSE_R = 44, PEER_GAP = 24;
+  const bars = [];
+  for (let i = 0; i < BARS; i++) {
+    const r = document.createElementNS(NS, 'rect');
+    r.setAttribute('class', 'bar');
+    r.setAttribute('fill', '#9E2B1A');
+    r.setAttribute('fill-opacity', '1');
+    r.setAttribute('width', '0');
+    r.setAttribute('height', '0');
+    g.appendChild(r);
+    bars.push({
+      el: r, horizontal: i % 2 === 0,
+      pos: 0, offset: 0, speed: 0, wait: 0,
+      pending: false, off: 0, span: 0, thick: 1.6, passWith: null, adv: 0, touch: true
+    });
+  }
+  // 每个方向 4 条中 3 条贴边、1 条悬空短线（整体 2/3 贴边、1/3 悬空）
+  [true, false].forEach(isH => {
+    bars.filter(b => b.horizontal === isH).forEach((b, m) => {
+      b.touch = m % 4 !== 3;
+    });
+  });
+  // 鼠标跟踪（换算到 viewBox 坐标）
+  let mouse = null, hover = false;
+  function toSvg(e) {
+    const rect = svg.getBoundingClientRect();
+    return {
+      x: (e.clientX - rect.left) / rect.width * 400,
+      y: (e.clientY - rect.top) / rect.height * 400
+    };
+  }
+  svg.addEventListener('mouseenter', e => { hover = true; mouse = toSvg(e); });
+  svg.addEventListener('mousemove', e => { mouse = toSvg(e); });
+  svg.addEventListener('mouseleave', () => { hover = false; mouse = null; });
+
+  // 生成一条新条纹：长条至少一端贴边框，短条两端悬空
+  function spawn(b) {
+    if (b.touch) {
+      const r = Math.random();
+      if (r < 0.3) {
+        // 两端都接边框
+        b.span = SIZE;
+        b.off = X0;
+      } else if (r < 0.65) {
+        // 一端接起边
+        b.span = SIZE * (0.4 + Math.random() * 0.6);
+        b.off = X0;
+      } else {
+        // 一端接终边
+        b.span = SIZE * (0.4 + Math.random() * 0.6);
+        b.off = X0 + SIZE - b.span;
+      }
+    } else {
+      // 短线条：两端都不接边框
+      b.span = SIZE * (0.15 + Math.random() * 0.35);
+      const margin = 24 + Math.random() * 40;
+      b.off = X0 + margin + Math.random() * (SIZE - b.span - margin * 2);
+    }
+    if (b.horizontal) {
+      b.el.setAttribute('x', b.off);
+      b.el.setAttribute('width', b.span);
+      b.el.setAttribute('height', b.thick);
+    } else {
+      b.el.setAttribute('y', b.off);
+      b.el.setAttribute('width', b.thick);
+      b.el.setAttribute('height', b.span);
+    }
+    b.pos = X0 - b.thick;
+    b.offset = 0;
+    b.speed = 18 + Math.random() * 40;
+    b.passWith = null;
+  }
+  // 初始分层铺开：同向按槽位错位分布，避免加载时贴叠
+  [true, false].forEach(isH => {
+    const group = bars.filter(b => b.horizontal === isH);
+    const slot = SIZE / group.length;
+    group.forEach((b, m) => {
+      spawn(b);
+      b.pos = X0 + (m + 0.3 + Math.random() * 0.4) * slot;
+      b.el.setAttribute(isH ? 'y' : 'x', b.pos.toFixed(1));
+    });
+  });
+
+  let last = performance.now();
+  const lastCross = { h: -1e9, v: -1e9 };
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+
+    // 悬停期间暂停重生（不生成新线条）
+    bars.forEach(b => {
+      if (b.pending && !hover) {
+        b.wait -= dt;
+        if (b.wait <= 0) { spawn(b); b.pending = false; }
+      }
+    });
+
+    // 每帧期望位移
+    bars.forEach(b => { b.adv = b.speed * dt; });
+
+    // 同向限距：只平滑减速跟进、位置永不回退；每个方向每 1 秒最多放行一次穿越
+    [['h', true], ['v', false]].forEach(([dir, isH]) => {
+      const group = bars.filter(b => !b.pending && b.horizontal === isH)
+        .sort((a, b) => a.pos - b.pos);
+      // 从最前一辆往后传播约束，保证队列级联也自然
+      for (let k = group.length - 1; k >= 1; k--) {
+        const lead = group[k], follow = group[k - 1];
+        // 固定轴跨度不重叠：视觉上不会重合，无需排队
+        const disjoint = lead.off > follow.off + follow.span || follow.off > lead.off + lead.span;
+        const paired = follow.passWith === lead && lead.passWith === follow;
+        if (disjoint || lead.pos - follow.pos >= PEER_GAP) {
+          if (paired) { follow.passWith = null; lead.passWith = null; }
+          continue;
+        }
+        if (paired) continue; // 放行穿越中，等它们自然分开
+        if (follow.speed > lead.speed) {
+          if (now - lastCross[dir] >= 1000) {
+            // 本秒额度未用：放行这一次穿越
+            lastCross[dir] = now;
+            follow.passWith = lead;
+            lead.passWith = follow;
+          } else {
+            // 名额未到：本帧最多前进到安全距离处（渐近减速，不倒退）
+            const room = Math.max(0, lead.pos + lead.adv - PEER_GAP - follow.pos);
+            follow.adv = Math.min(follow.adv, room);
+          }
+        }
+      }
+    });
+
+    // 推进 + 离场
+    bars.forEach(b => {
+      if (b.pending) return;
+      b.pos += b.adv;
+      if (b.pos > X0 + SIZE) {
+        b.pending = true;
+        b.wait = 0.2 + Math.random() * 1.8;
+        b.el.setAttribute('width', '0');
+        b.el.setAttribute('height', '0');
+      }
+    });
+
+    // 计算避让目标：鼠标避让 + 同向线条互斥（横线只沿 y 动，竖线只沿 x 动）
+    const desired = bars.map(() => 0);
+    for (let i = 0; i < bars.length; i++) {
+      const a = bars[i];
+      if (a.pending) continue;
+      const cur = a.pos + a.offset;
+      if (hover && mouse) {
+        // 鼠标落在条纹固定轴跨度附近才需要避让
+        const mOther = a.horizontal ? mouse.x : mouse.y;
+        if (mOther > a.off - MOUSE_R && mOther < a.off + a.span + MOUSE_R) {
+          const mCoord = a.horizontal ? mouse.y : mouse.x;
+          const d = cur - mCoord;
+          if (Math.abs(d) < MOUSE_R) {
+            const s = d === 0 ? 1 : Math.sign(d);
+            desired[i] += s * (MOUSE_R - Math.abs(d));
+          }
+        }
+      }
+      // 同向斥力：仅固定轴跨度重叠时，沿流动轴推开
+      for (let j = i + 1; j < bars.length; j++) {
+        const c = bars[j];
+        if (c.pending || c.horizontal !== a.horizontal) continue;
+        if (c.off > a.off + a.span || a.off > c.off + c.span) continue;
+        const d2 = (a.pos + a.offset) - (c.pos + c.offset);
+        if (Math.abs(d2) < PEER_GAP) {
+          const s = d2 === 0 ? 1 : Math.sign(d2);
+          const push = (PEER_GAP - Math.abs(d2)) / 2;
+          desired[i] += s * push;
+          desired[j] -= s * push;
+        }
+      }
+    }
+
+    // 平滑逼近避让目标，并夹在印面范围内
+    bars.forEach((b, i) => {
+      if (b.pending) return;
+      b.offset += (desired[i] - b.offset) * Math.min(1, dt * 6);
+      const v = Math.max(X0, Math.min(X0 + SIZE - b.thick, b.pos + b.offset));
+      b.el.setAttribute(b.horizontal ? 'y' : 'x', v.toFixed(1));
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ====== 点此继续：已改为指向官网首页的超链接（见 HTML） ====== */
+</script>
+</body>
+</html>

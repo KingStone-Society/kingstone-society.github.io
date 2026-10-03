@@ -1,0 +1,11 @@
+- generic [ref=f2e2]:
+  - generic [ref=f2e3]:
+    - generic [ref=f2e4]: 金石篆刻社 · 文章管理
+    - generic [ref=f2e5]:
+      - link "查看网站" [ref=f2e6]:
+        - /url: /
+      - link "退出登录" [ref=f2e7]:
+        - /url: "#"
+  - generic [ref=f2e8]:
+    - generic [ref=f2e9]: 正在加载编辑后台…
+    - generic [ref=f2e10]: 首次加载需下载约 1.5MB 组件，预计 10~30 秒，请耐心等待；超过 1 分钟请刷新重试

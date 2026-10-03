@@ -1,0 +1,19 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e17]:
+    - generic [ref=f1e18]: 金石篆刻社 · 文章管理
+    - generic [ref=f1e19]:
+      - link "查看网站" [ref=f1e20]:
+        - /url: /
+      - link "退出登录" [ref=f1e21]:
+        - /url: "#"
+  - generic [ref=f1e24]:
+    - img "Logo" [ref=f1e39]
+    - generic [ref=f1e26]:
+      - paragraph
+      - textbox "Email" [ref=f1e27]
+      - paragraph
+      - textbox "Password" [ref=f1e28]
+      - button "Login" [ref=f1e29] [cursor=pointer]
+    - link [ref=f1e30]:
+      - /url: https://kingstone-society.github.io
+      - paragraph [ref=f1e34]: Go back to site

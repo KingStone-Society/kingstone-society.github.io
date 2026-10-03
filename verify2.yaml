@@ -1,0 +1,9 @@
+- generic [ref=e16]:
+  - generic [ref=e17]:
+    - generic [ref=e18]: 金石篆刻社 · 文章管理
+    - generic [ref=e19]:
+      - link "查看网站" [ref=e20]:
+        - /url: /
+      - link "退出登录" [ref=e21]:
+        - /url: "#"
+  - generic [ref=e22]: 正在加载编辑后台…

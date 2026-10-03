@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>金石篆刻社 :// 招新终端</title>
+<style>
+:root{
+  --bg:#0a0a0a;
+  --bg-soft:#121212;
+  --ink:#e8e8e8;
+  --ink-dim:#888888;
+  --vermilion:#9E2B1A;
+  --ghost:#2A2A2A;
+  --font-zh:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Source Han Sans CN",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+html{background:var(--bg);color:var(--ink);font-family:var(--font-zh);line-height:1.5;-webkit-font-smoothing:antialiased}
+body{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;background:none;border:none;color:inherit;cursor:pointer}
+ul{list-style:none}
+
+/* ====== Loading ====== */
+.loading{
+  position:fixed;inset:0;z-index:200;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:24px;
+  transition:opacity .55s ease,visibility .55s;
+}
+.loading.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loading-brand{
+  font-size:30px;font-weight:900;letter-spacing:.18em;
+}
+.loading-brand .slash{color:var(--vermilion);margin-left:6px}
+.loading-bar{
+  width:240px;height:1px;background:var(--ghost);position:relative;overflow:hidden;
+}
+.loading-bar::after{
+  content:'';position:absolute;left:0;top:0;height:100%;width:var(--p,0%);
+  background:var(--vermilion);transition:width .18s linear;
+}
+.loading-meta{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;color:var(--ink-dim);
+}
+.loading-meta b{color:var(--vermilion);font-weight:600}
+
+/* ====== Topbar ====== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:36px;
+  background:var(--bg-soft);
+  border-bottom:1px solid var(--ghost);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 28px;z-index:100;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:1px;
+  color:var(--ink-dim);
+}
+.topbar .slash{color:var(--vermilion);margin:0 4px}
+.topbar-left b{color:var(--ink);font-weight:600;letter-spacing:2px}
+.topbar-mid{font-size:11px}
+.topbar-mid .recruiting{color:var(--vermilion)}
+.topbar-mid .pulse{
+  display:inline-block;width:6px;height:6px;background:var(--vermilion);
+  margin-right:8px;vertical-align:middle;animation:blink 1.5s infinite;
+}
+.topbar-right{text-align:right}
+.topbar-right b{color:var(--ink);font-weight:600}
+@keyframes blink{50%{opacity:.35}}
+
+/* ====== Stage & panels ====== */
+.stage{
+  position:fixed;top:36px;left:0;
+  width:100vw;height:calc(100vh - 36px);overflow:hidden;
+}
+.sections{
+  display:flex;flex-direction:row;height:100%;width:max-content;
+  transition:transform .8s cubic-bezier(.7,0,.2,1);
+  will-change:transform;
+}
+.panel{
+  flex:0 0 100vw;
+  height:100%;width:100vw;position:relative;overflow:hidden;
+  padding:60px 6vw;
+}
+.panel-hero{display:flex;flex-direction:column;justify-content:flex-end;padding:0 6vw 8vh;position:relative}
+
+/* ====== HUD 角框 ====== */
+.corner{position:absolute;width:10px;height:10px;pointer-events:none;transition:.3s}
+.corner.tl{top:0;left:0;border-top:1px solid var(--ink-dim);border-left:1px solid var(--ink-dim)}
+.corner.tr{top:0;right:0;border-top:1px solid var(--ink-dim);border-right:1px solid var(--ink-dim)}
+.corner.bl{bottom:0;left:0;border-bottom:1px solid var(--ink-dim);border-left:1px solid var(--ink-dim)}
+.corner.br{bottom:0;right:0;border-bottom:1px solid var(--ink-dim);border-right:1px solid var(--ink-dim)}
+.hud-btn{position:relative;display:inline-block}
+.hud-btn .corner{width:6px;height:6px;border-color:var(--ink)}
+.hud-btn:hover .corner{border-color:var(--vermilion)}
+
+/* ====== 通用面板内文 ====== */
+.panel-inner{
+  max-width:1200px;width:100%;margin:0 auto;
+  display:flex;flex-direction:column;gap:14px;
+}
+.panel:not(.panel-hero){display:flex;align-items:center}
+.section-pretitle{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:4px;
+  color:var(--vermilion);text-transform:uppercase;
+}
+.section-title{
+  font-size:clamp(36px,5vw,60px);font-weight:900;letter-spacing:.04em;line-height:1.05;
+}
+.section-en{
+  font-family:var(--font-mono);font-size:12px;letter-spacing:4px;
+  color:var(--ink-dim);text-transform:uppercase;margin-bottom:18px;
+}
+.panel-body p{font-size:16px;line-height:1.9;margin-bottom:14px}
+.panel-link{
+  align-self:flex-start;
+  font-family:var(--font-mono);font-size:12px;letter-spacing:3px;
+  padding:11px 22px;border:1px solid var(--ink);color:var(--ink);
+  background:transparent;cursor:pointer;transition:.25s;margin-top:14px;
+}
+.panel-link:hover{background:rgba(158,43,26,.08);border-color:var(--vermilion);color:var(--vermilion)}
+
+/* ====== 分节大字水印 / 双栏网格（版式参考首页） ====== */
+.panel-watermark{
+  position:absolute;left:4vw;top:5vh;z-index:0;
+  font-family:var(--font-zh);
+  font-size:clamp(64px,11vw,170px);
+  font-weight:900;letter-spacing:.08em;line-height:1;
+  color:var(--ink);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.28) 45%,transparent 90%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.28) 45%,transparent 90%);
+  pointer-events:none;user-select:none;
+}
+.panel-grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:4vw;align-items:end;
+}
+.panel-copy{display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel-media{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ph-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ====== 素材占位块 ====== */
+.ph{
+  position:relative;background:var(--bg-soft);border:1px solid var(--ghost);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;text-align:center;color:var(--ink-dim);overflow:hidden;
+}
+.ph::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent 0 13px,rgba(232,232,232,.05) 13px 14px);
+}
+.ph-tag{position:relative;font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--vermilion)}
+.ph-name{position:relative;font-size:13px;letter-spacing:2px;color:var(--ink)}
+.ph-en{position:relative;font-family:var(--font-mono);font-size:9px;letter-spacing:2px}
+
+/* ====== 数据条 / 理念 / 大事记 ====== */
+.stat-row{display:flex;border:1px solid var(--ghost)}
+.stat-cell{flex:1;padding:14px 16px;border-right:1px solid var(--ghost)}
+.stat-cell:last-child{border-right:0}
+.stat-num{font-family:var(--font-mono);font-size:26px;font-weight:700;color:var(--vermilion)}
+.stat-label{font-size:11px;letter-spacing:2px;color:var(--ink-dim);margin-top:2px}
+.motto{
+  border-left:2px solid var(--vermilion);padding:8px 0 8px 18px;
+  font-size:15px;letter-spacing:1.5px;line-height:1.9;color:var(--ink);
+}
+.motto small{
+  display:block;margin-top:6px;font-family:var(--font-mono);
+  font-size:10px;letter-spacing:3px;color:var(--ink-dim);
+}
+.tl{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ghost)}
+.tl-cell{padding:13px 15px;border-right:1px solid var(--ghost)}
+.tl-cell:last-child{border-right:0}
+.tl-year{font-family:var(--font-mono);font-size:13px;letter-spacing:2px;color:var(--vermilion)}
+.tl-text{font-size:11.5px;line-height:1.7;color:var(--ink-dim);margin-top:6px}
+.qr-row{display:flex;gap:18px}
+
+/* ====== 屏底元素 ====== */
+.watermark{
+  position:fixed;bottom:22px;left:28px;z-index:50;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--ink-dim);
+}
+.watermark .slash{color:var(--vermilion);margin:0 4px}
+.watermark b{color:var(--ink);font-weight:600}
+.counter{
+  position:fixed;bottom:22px;right:32px;z-index:50;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--ink-dim);
+}
+.counter .cur{color:var(--vermilion);font-weight:700}
+.counter .slash{color:var(--ghost);margin:0 8px}
+
+.scroll-hint{
+  position:fixed;bottom:60px;left:50%;transform:translateX(-50%);z-index:50;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:4px;color:var(--ink-dim);
+  opacity:0;pointer-events:none;
+  animation:fadehint 2.2s ease-in-out infinite;
+  transition:opacity .4s ease;
+}
+.scroll-hint.show{opacity:1}
+@keyframes fadehint{
+  0%,100%{opacity:.25;transform:translate(-50%,0)}
+  50%{opacity:.95;transform:translate(-50%,8px)}
+}
+
+/* ====== 入场动画 ====== */
+[data-reveal]{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+[data-reveal].reveal-in{opacity:1;transform:translateY(0)}
+
+/* ====== Hero ====== */
+.hero-text{
+  max-width:65%;
+}
+.hero-pretitle{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:4px;
+  color:var(--ink-dim);margin-bottom:24px;
+}
+.hero-pretitle .slash{color:var(--vermilion);margin:0 4px}
+.hero-pretitle b{color:var(--ink);font-weight:600;letter-spacing:2px}
+.hero-title{
+  font-size:clamp(56px,11vw,180px);font-weight:900;
+  letter-spacing:.04em;line-height:.95;
+}
+.hero-title .slash{color:var(--vermilion)}
+.hero-en{
+  font-family:var(--font-mono);font-size:13px;letter-spacing:5px;
+  color:var(--ink-dim);margin-top:22px;text-transform:uppercase;
+}
+.hero-face{
+  position:absolute;left:64vw;top:5vh;
+  width:min(24vw,360px);aspect-ratio:1/1;
+}
+.hero-watermark{
+  position:absolute;left:4vw;top:5vh;
+  font-family:var(--font-zh);
+  font-size:clamp(96px,18vw,280px);
+  font-weight:900;letter-spacing:.04em;line-height:1;
+  color:var(--ink);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.35) 45%,transparent 92%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.35) 45%,transparent 92%);
+  pointer-events:none;user-select:none;z-index:0;
+}
+.hero-face svg{width:100%;height:100%;animation:breathe 6s ease-in-out infinite}
+.hero-face svg rect.bar{shape-rendering:crispEdges}
+.hero-divider{
+  position:absolute;left:54vw;top:16vh;bottom:16vh;width:1px;
+  background:var(--ghost);pointer-events:none;
+}
+.hero-divider::before{
+  content:'';position:absolute;left:0;top:0;width:1px;height:60px;
+  background:var(--vermilion);
+  animation:divscan 5s ease-in-out infinite;
+}
+@keyframes divscan{0%,100%{top:0}50%{top:calc(100% - 60px)}}
+.hero-video{
+  position:absolute;right:6vw;bottom:9vh;
+  width:min(38vw,520px);aspect-ratio:16/9;
+  border:1px solid var(--ghost);background:#000;overflow:hidden;
+  display:block;cursor:pointer;
+}
+.hero-video video{width:100%;height:100%;display:block;object-fit:cover;border:0}
+.hero-video-link{
+  position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:3px;
+  color:var(--ink);padding:8px 14px;text-align:center;line-height:1.9;white-space:normal;
+  border:1px solid var(--ink);background:rgba(0,0,0,.6);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.hero-video:hover .hero-video-link{opacity:1}
+@keyframes breathe{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* ====== 三卡片 ====== */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.card{
+  background:var(--bg-soft);padding:30px 26px;
+  display:flex;flex-direction:column;gap:12px;min-height:280px;position:relative;
+}
+.card-num{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--vermilion)}
+.card-title{font-size:20px;font-weight:700}
+.card-en{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--ink-dim);text-transform:uppercase}
+.card-desc{font-size:13px;color:var(--ink-dim);line-height:1.7;flex:1}
+.card-stat{font-family:var(--font-mono);font-size:11px;color:var(--ink-dim);letter-spacing:2px}
+.card-stat b{color:var(--vermilion);font-weight:600;margin-left:6px}
+.card-link{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:2px;
+  color:var(--ink-dim);transition:.2s;
+}
+.card-link:hover{color:var(--vermilion)}
+
+/* ====== FAQ ====== */
+.faq{display:flex;flex-direction:column;border-top:1px solid var(--ghost);margin-top:18px}
+.faq-item{border-bottom:1px solid var(--ghost)}
+.faq-q{
+  padding:18px 0;display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;font-size:15px;
+}
+.faq-q::after{
+  content:'+';font-family:var(--font-mono);color:var(--ink-dim);
+  transition:.3s ease;display:inline-block;
+}
+.faq-item.open .faq-q::after{transform:rotate(45deg);color:var(--vermilion)}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .3s ease;
+  color:var(--ink-dim);font-size:13px;line-height:1.8;
+}
+.faq-item.open .faq-a{max-height:200px;padding:0 0 18px}
+
+/* ====== 寄语 ====== */
+blockquote{
+  border-left:2px solid var(--vermilion);padding:18px 24px;
+  font-size:18px;line-height:2;margin-top:18px;
+}
+.greeting-sig{
+  margin-top:24px;font-family:var(--font-mono);font-size:13px;
+  letter-spacing:2px;color:var(--ink-dim);line-height:1.9;
+}
+.greeting-sig b{color:var(--ink);font-weight:600}
+
+/* ====== 历任社长 ====== */
+.presidents{display:flex;gap:14px;overflow-x:auto;padding:18px 0 6px;margin-top:8px}
+.pres-card{
+  flex:0 0 170px;background:var(--bg-soft);border:1px solid var(--ghost);
+  padding:14px;display:flex;flex-direction:column;gap:7px;position:relative;
+}
+.pres-photo{aspect-ratio:4/5;margin-bottom:2px}
+.pres-name{font-size:17px;font-weight:700}
+.pres-en{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--ink-dim)}
+.pres-term{font-family:var(--font-mono);font-size:11px;color:var(--vermilion);letter-spacing:1px}
+.pres-tag{font-size:12px;color:var(--ink-dim);line-height:1.6;margin-top:auto}
+
+/* ====== 报名入口 ====== */
+.signup-inner{align-items:center;text-align:center}
+.signup-actions{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:30px}
+.signup-main{
+  padding:16px 36px;border:1px solid var(--vermilion);color:var(--vermilion);
+  font-size:14px;letter-spacing:3px;background:transparent;transition:.25s;
+}
+.signup-main:hover{background:var(--vermilion);color:var(--ink)}
+.signup-main:hover .corner{border-color:var(--ink)}
+.signup-sub{
+  font-family:var(--font-mono);font-size:13px;letter-spacing:2px;
+  color:var(--ink-dim);transition:.2s;
+}
+.signup-sub:hover{color:var(--vermilion)}
+.signup-foot{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:4px;
+  color:var(--ink-dim);margin-top:30px;
+}
+
+/* ====== Mobile ====== */
+@media (max-width:768px){
+  body{overflow:auto !important;height:auto}
+  .stage{position:static;height:auto;overflow:visible}
+  .sections{display:block;transform:none !important;width:100%}
+  .panel{width:100%;height:auto;min-height:100vh;padding:60px 6vw}
+  .panel-hero{padding:calc(36px + 6vh) 6vw 8vh;justify-content:flex-start}
+  .hero-text{max-width:100%}
+  .hero-face{position:static;transform:none;width:50vw;max-width:240px;margin:30px auto 0}
+  .hero-divider{display:none}
+  .hero-video{position:static;width:100%;max-width:520px;margin:30px auto 0;aspect-ratio:16/9}
+  .cards{grid-template-columns:1fr}
+  .panel-grid{grid-template-columns:minmax(0,1fr)}
+  .tl{grid-template-columns:1fr}
+  .presidents{margin-right:-6vw;padding-right:6vw}
+  .watermark,.counter,.scroll-hint{display:none}
+  .section-title{font-size:36px}
+}
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading" id="loading">
+  <div class="loading-brand">KINGSTONE<span class="slash">://</span></div>
+  <div class="loading-bar"></div>
+  <div class="loading-meta"><b id="loadingPct">000</b> / 100 LOADING…</div>
+</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-left">金石篆刻社团<span class="slash">://</span><b>KINGSTONE SOCIETY</b></div>
+  <div class="topbar-mid" id="topbarMid"></div>
+  <div class="topbar-right"><span id="curDate"></span> <b>//</b> <span id="curTime"></span></div>
+</div>
+
+<!-- Stage -->
+<main class="stage">
+  <div class="sections" id="sections">
+
+    <!-- 0 Hero -->
+    <section class="panel panel-hero" data-index="0">
+      <div class="hero-watermark" aria-hidden="true">SSJG</div>
+      <div class="hero-divider" aria-hidden="true"></div>
+      <div class="hero-text">
+        <div class="hero-pretitle" data-reveal>上师嘉高 <span class="slash">://</span> <b>KINGSTONE SOCIETY</b></div>
+        <h1 class="hero-title" data-reveal>金石篆刻社<span class="slash">。</span></h1>
+        <div class="hero-en" data-reveal>EST. 2023 // SEAL · CARVE · TRACE</div>
+      </div>
+      <div class="hero-face" data-reveal aria-hidden="true">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="40" width="320" height="320" fill="none" stroke="#9E2B1A" stroke-width="1.6"/>
+          <g id="sealGlitch"></g>
+        </svg>
+      </div>
+      <a class="hero-video" href="https://www.bilibili.com/video/BV15zeC6NEhZ/" target="_blank" rel="noopener" data-reveal>
+        <video autoplay muted loop playsinline preload="auto" poster="http://i1.hdslb.com/bfs/archive/5e76641a72933793d0372281341bd152b1d4ea08.jpg" src="https://upos-sz-mirrorbd.bilivideo.com/upgcxcode/48/58/41991145848/41991145848-1-192.mp4?e=ig8euxZM2rNcNbR17zdVhwdlhWRahwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&amp;mid=0&amp;deadline=1790673480&amp;gen=playurlv3&amp;os=bdbv&amp;nbs=1&amp;oi=2362416134&amp;platform=html5&amp;uipk=5&amp;trid=d833dbb6898a4672af5725e1cdb82a1h&amp;og=hw&amp;upsig=6bc1625e454b5aa30bf86380f5065e0b&amp;uparams=e,mid,deadline,gen,os,nbs,oi,platform,uipk,trid,og&amp;bvc=vod&amp;nettype=0&amp;bw=938232&amp;lrs=-1&amp;agrr=1&amp;buvid=&amp;build=0&amp;dl=0&amp;f=h_0_0&amp;orderid=0,1"></video>
+        <span class="hero-video-link" aria-hidden="true">社团宣传片<br>VIEW ON BILIBILI →</span>
+      </a>
+      <div class="scroll-hint" id="scrollHint">SCROLL ↓</div>
+    </section>
+
+    <!-- 1 社团简介 -->
+    <section class="panel" data-index="1">
+      <div class="panel-watermark" aria-hidden="true">概况</div>
+      <div class="panel-inner panel-grid">
+        <div class="panel-copy">
+          <div class="section-pretitle" data-reveal>PROFILE <span class="vermilion">://</span> 其一</div>
+          <h2 class="section-title" data-reveal>社团简介</h2>
+          <div class="section-en" data-reveal>ABOUT THE SOCIETY</div>
+          <div class="panel-body" data-reveal>
+            <p>金石篆刻社以弘扬中华民族传统篆刻文化为目标，旨在培植我校篆刻爱好者审美、鉴赏、实践的能力，藉篆刻的学习与交流丰富校园文化生活。</p>
+            <p>我社踊跃投身校园开放日、社团文化节、区级展示、沪喀携手系列活动等各级舞台，积极参加各类比赛，是我校获奖最多的艺术类社团，也是我校「游于艺」建设中的一股生力军。</p>
+          </div>
+          <div class="stat-row" data-reveal>
+            <div class="stat-cell"><div class="stat-num" id="statMembers">--</div><div class="stat-label">在册社员</div></div>
+            <div class="stat-cell"><div class="stat-num" id="statYears">--</div><div class="stat-label">年历史</div></div>
+            <div class="stat-cell"><div class="stat-num" id="statAwards">--</div><div class="stat-label">累计奖项</div></div>
+          </div>
+          <div class="motto" data-reveal>
+            <span id="mottoText"></span>
+            <small>社团理念 // MOTTO</small>
+          </div>
+          <a class="panel-link hud-btn" href="/society" data-reveal>
+            <span class="corner tl"></span><span class="corner tr"></span>
+            <span class="corner bl"></span><span class="corner br"></span>
+            READ MORE →
+          </a>
+        </div>
+        <div class="panel-media" data-reveal>
+          <div class="ph" style="aspect-ratio:16/10">
+            <span class="ph-tag">[ 图片占位 ]</span>
+            <span class="ph-name">社团合影</span>
+            <span class="ph-en">SOCIETY PHOTO</span>
+          </div>
+          <div class="ph-row">
+            <div class="ph" style="aspect-ratio:1/1">
+              <span class="ph-tag">[ 图片占位 ]</span>
+              <span class="ph-name">第一代社徽</span>
+              <span class="ph-en">EMBLEM I</span>
+            </div>
+            <div class="ph" style="aspect-ratio:1/1">
+              <span class="ph-tag">[ 图片占位 ]</span>
+              <span class="ph-name">第二代社徽</span>
+              <span class="ph-en">EMBLEM II</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 核心优势 -->
+    <section class="panel" data-index="2">
+      <div class="panel-watermark" aria-hidden="true">优势</div>
+      <div class="panel-inner">
+        <div class="section-pretitle" data-reveal>FEATURES <span class="vermilion">://</span> 其二</div>
+        <h2 class="section-title" data-reveal>核心优势</h2>
+        <div class="section-en" data-reveal>WHAT WE OFFER</div>
+        <div class="cards" data-reveal>
+          <div class="card">
+            <span class="corner tl"></span><span class="corner tr"></span>
+            <span class="corner bl"></span><span class="corner br"></span>
+            <div class="card-num">// 01</div>
+            <div class="card-title">制度体系</div>
+            <div class="card-en">INSTITUTIONS</div>
+            <div class="card-desc">建社次月即定稿章程，是全校最早拥有章程的社团；《社务手册》《通用讲义》两套原创材料，社务委员会与社团智库双轨治理，不依赖任何单个人。</div>
+            <div class="card-stat">DOC <b id="statDoc"></b></div>
+            <a class="card-link" href="/rules">VIEW DOC →</a>
+          </div>
+          <div class="card">
+            <span class="corner tl"></span><span class="corner tr"></span>
+            <span class="corner bl"></span><span class="corner br"></span>
+            <div class="card-num">// 02</div>
+            <div class="card-title">舞台经历</div>
+            <div class="card-en">STAGE</div>
+            <div class="card-desc">从校园开放日、社团文化节，到嘉定区美育浸润成果展（保利大剧院）；首届社团评选票数第一，获评明星社团。</div>
+            <div class="card-stat">EVENT <b id="statEvent"></b></div>
+            <a class="card-link" href="/news">VIEW NEWS →</a>
+          </div>
+          <div class="card">
+            <span class="corner tl"></span><span class="corner tr"></span>
+            <span class="corner bl"></span><span class="corner br"></span>
+            <div class="card-num">// 03</div>
+            <div class="card-title">作品成果</div>
+            <div class="card-en">WORKS</div>
+            <div class="card-desc">通用讲义、社务手册、年度宣传片持续产出；从课堂习作到参展作品，每一方印都是时间的刻痕。</div>
+            <div class="card-stat">WORK <b id="statWork"></b></div>
+            <a class="card-link" href="/works">VIEW WORK →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 FAQ -->
+    <section class="panel" data-index="3">
+      <div class="panel-watermark" aria-hidden="true">问答</div>
+      <div class="panel-inner">
+        <div class="section-pretitle" data-reveal>Q&amp;A <span class="vermilion">://</span> 其三</div>
+        <h2 class="section-title" data-reveal>常见问答</h2>
+        <div class="section-en" data-reveal>FREQUENT QUESTIONS</div>
+        <div class="faq" id="faqList" data-reveal></div>
+      </div>
+    </section>
+
+    <!-- 4 社长寄语 -->
+    <section class="panel" data-index="4">
+      <div class="panel-watermark" aria-hidden="true">寄语</div>
+      <div class="panel-inner panel-grid">
+        <div class="panel-copy">
+          <div class="section-pretitle" data-reveal>MESSAGE <span class="vermilion">://</span> 其四</div>
+          <h2 class="section-title" data-reveal>社长寄语</h2>
+          <div class="section-en" data-reveal>FROM THE PRESIDENT</div>
+          <blockquote data-reveal>
+            金石篆刻社不只是一个学刻章的地方。它是一个可以让你留下痕迹的地方。三年了，每一任社长都在这方寸之间刻下过自己的名字。
+          </blockquote>
+          <div class="greeting-sig" id="greetingSig" data-reveal></div>
+        </div>
+        <div class="panel-media" data-reveal>
+          <div class="ph" style="aspect-ratio:3/4;max-width:260px">
+            <span class="ph-tag">[ 图片占位 ]</span>
+            <span class="ph-name">社长近照</span>
+            <span class="ph-en">PRESIDENT PORTRAIT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 历任社长 -->
+    <section class="panel" data-index="5">
+      <div class="panel-watermark" aria-hidden="true">传承</div>
+      <div class="panel-inner">
+        <div class="section-pretitle" data-reveal>HISTORY <span class="vermilion">://</span> 其五</div>
+        <h2 class="section-title" data-reveal>历任社长</h2>
+        <div class="section-en" data-reveal>FORMER PRESIDENTS</div>
+        <div class="presidents" id="presidents" data-reveal></div>
+        <div class="tl" id="timeline" data-reveal></div>
+      </div>
+    </section>
+
+    <!-- 6 报名入口 -->
+    <section class="panel" data-index="6">
+      <div class="panel-watermark" aria-hidden="true">加入</div>
+      <div class="panel-inner signup-inner">
+        <div class="section-pretitle" data-reveal>RECRUIT <span class="vermilion">://</span> 其六</div>
+        <h2 class="section-title" data-reveal>加入我们</h2>
+        <div class="section-en" data-reveal>JOIN US NOW</div>
+        <div class="signup-actions">
+          <button class="signup-main hud-btn" data-reveal>
+            <span class="corner tl"></span><span class="corner tr"></span>
+            <span class="corner bl"></span><span class="corner br"></span>
+            填写报名问卷 // JOIN
+          </button>
+          <a class="signup-sub" href="#" data-reveal>加入招新咨询群 // RECRUITIAL GROUP →</a>
+        </div>
+        <div class="qr-row" data-reveal>
+          <div class="ph" style="width:150px;aspect-ratio:1/1">
+            <span class="ph-tag">[ 二维码占位 ]</span>
+            <span class="ph-name">报名问卷</span>
+            <span class="ph-en">JOIN QR</span>
+          </div>
+          <div class="ph" style="width:150px;aspect-ratio:1/1">
+            <span class="ph-tag">[ 二维码占位 ]</span>
+            <span class="ph-name">招新咨询群</span>
+            <span class="ph-en">GROUP QR</span>
+          </div>
+        </div>
+        <div class="signup-foot" id="signupFoot" data-reveal></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- 屏底元素 -->
+<div class="watermark">金石篆刻社团<span class="slash">://</span><b>KINGSTONE.SOCIETY</b></div>
+<div class="counter"><span class="cur" id="curIdx">01</span><span class="slash">//</span><span id="totalIdx">07</span></div>
+
+<script>
+const data = {
+  startYear: 2023,
+  presidentName: "许伊凯",
+  memberCount: 72,
+  awardCount: 12,
+  docCount: 5,
+  eventCount: 15,
+  workCount: 30,
+  motto: "澄源正本，式启惟新；执此方寸，叩问千里。",
+  recruitMonths: [8, 9, 10],
+  recruitDeadline: "10-31",
+  presidentPinyin: {
+    "钱牧风": "QIAN MUFENG",
+    "刘馨阳": "LIU XINYANG",
+    "张奕茹": "ZHANG YIRU",
+    "许伊凯": "XU YIKAI"
+  },
+  presidents: [
+    { name: "钱牧风", term: "2023.8 ~ 2024.9", tag: "创社社长，奠定社团发展基础" },
+    { name: "刘馨阳", term: "2024.9 ~ 2025.9", tag: "过渡时期贯彻社团制度与精神" },
+    { name: "张奕茹", term: "2025.9 ~ 2026.9", tag: "接续社团工作与篆刻艺术创作" },
+    { name: "许伊凯", term: "2026.9 ~ 至今", tag: "现任社长" }
+  ],
+  timeline: [
+    { year: "2023", text: "9 月建社；10 月定稿章程，成为全校最早拥有章程的社团" },
+    { year: "2024", text: "首届社团评选票数第一，获评明星社团" },
+    { year: "2025", text: "联合墨拓社、书法社赴保利大剧院参加嘉定区美育浸润成果展" },
+    { year: "2026", text: "参加学校第三届社团文化节；完成第四代领导核心交接" }
+  ],
+  faq: [
+    { q: "我零基础能来吗？", a: "能。社团课从执刀姿势教起，讲义覆盖从零到创作的完整路径。" },
+    { q: "社团课什么时候？", a: "每周固定时间，具体时段见招新群通知。" },
+    { q: "需要自己买工具吗？", a: "入社后统一采购或自行购买均可，入门工具总价约五十元。" },
+    { q: "社团有什么活动？", a: "社团课、作品展、校内外展示、比赛投稿、年度印章评选。" },
+    { q: "社长是怎么选出来的？", a: "副社长考察一学期后，由前三任社长面试考察，通过后接任。" }
+  ]
+};
+
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth() + 1;
+
+document.getElementById('curDate').textContent =
+  `${currentYear} // ${String(currentMonth).padStart(2,'0')} / ${String(now.getDate()).padStart(2,'0')}`;
+document.getElementById('curTime').textContent =
+  `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+document.getElementById('statMembers').textContent = data.memberCount;
+document.getElementById('statYears').textContent = currentYear - data.startYear + 1;
+document.getElementById('statAwards').textContent = data.awardCount;
+document.getElementById('mottoText').textContent = data.motto;
+
+document.getElementById('statDoc').textContent = data.docCount;
+document.getElementById('statEvent').textContent = data.eventCount;
+document.getElementById('statWork').textContent = data.workCount;
+
+const faqEl = document.getElementById('faqList');
+data.faq.forEach((item) => {
+  const div = document.createElement('div');
+  div.className = 'faq-item';
+  div.innerHTML =
+    `<div class="faq-q">${item.q}</div><div class="faq-a">${item.a}</div>`;
+  div.querySelector('.faq-q').addEventListener('click', () => {
+    div.classList.toggle('open');
+  });
+  faqEl.appendChild(div);
+});
+
+document.getElementById('greetingSig').innerHTML =
+  `<b>时任社长 ${data.presidentName}</b><br>${currentYear} 年 ${currentMonth} 月 // SIGNED BY PRESIDENT`;
+
+const presEl = document.getElementById('presidents');
+data.presidents.forEach((p) => {
+  const card = document.createElement('div');
+  card.className = 'pres-card';
+  card.innerHTML =
+    `<span class="corner tl"></span><span class="corner tr"></span>
+     <span class="corner bl"></span><span class="corner br"></span>
+     <div class="ph pres-photo">
+       <span class="ph-tag">[ 照片占位 ]</span>
+       <span class="ph-name">${p.name}</span>
+       <span class="ph-en">PORTRAIT</span>
+     </div>
+     <div class="pres-name">${p.name}</div>
+     <div class="pres-en">${data.presidentPinyin[p.name] || ''}</div>
+     <div class="pres-term">${p.term}</div>
+     <div class="pres-tag">${p.tag}</div>`;
+  presEl.appendChild(card);
+});
+
+const tlEl = document.getElementById('timeline');
+data.timeline.forEach((t) => {
+  const cell = document.createElement('div');
+  cell.className = 'tl-cell';
+  cell.innerHTML = `<div class="tl-year">${t.year}</div><div class="tl-text">${t.text}</div>`;
+  tlEl.appendChild(cell);
+});
+
+(function () {
+  const bar = document.getElementById('topbarMid');
+  const inRecruit = data.recruitMonths.includes(currentMonth);
+  if (inRecruit) {
+    const dl = data.recruitDeadline.split('-');
+    const deadline = new Date(currentYear, Number(dl[0]) - 1, Number(dl[1]));
+    const diff = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
+    const dayTxt = diff > 0 ? diff : 0;
+    bar.innerHTML =
+      `<span class="pulse"></span><span class="recruiting">RECRUITING // 距离截止还有 ${dayTxt} 天</span>`;
+  } else {
+    let nextYear = currentYear;
+    if (currentMonth > Math.max.apply(null, data.recruitMonths)) {
+      nextYear = currentYear + 1;
+    }
+    bar.innerHTML =
+      `NEXT RECRUIT <span class="vermilion">//</span> ${nextYear}.${String(Math.min.apply(null, data.recruitMonths)).padStart(2,'0')}`;
+  }
+})();
+
+document.getElementById('signupFoot').textContent =
+  `金石篆刻社 ${data.startYear} // ${currentYear} // ALL RIGHTS RESERVED`;
+
+/* ====== Loading 流程 ====== */
+const loadingEl = document.getElementById('loading');
+const loadingPctEl = document.getElementById('loadingPct');
+const loadingBarEl = loadingEl.querySelector('.loading-bar');
+let pct = 0;
+const loadTimer = setInterval(() => {
+  pct += Math.random() * 14 + 5;
+  if (pct >= 100) {
+    pct = 100;
+    clearInterval(loadTimer);
+    setTimeout(() => {
+      loadingEl.classList.add('hide');
+      triggerReveal(0);
+      document.getElementById('scrollHint').classList.add('show');
+    }, 180);
+  }
+  loadingPctEl.textContent = String(Math.floor(pct)).padStart(3, '0');
+  loadingBarEl.style.setProperty('--p', pct + '%');
+}, 110);
+
+/* ====== 印面条纹流动（悬停避让） ====== */
+(function () {
+  const g = document.getElementById('sealGlitch');
+  if (!g) return;
+  const svg = g.closest('svg');
+  const NS = 'http://www.w3.org/2000/svg';
+  const X0 = 40, SIZE = 320, BARS = 8;
+  const MOUSE_R = 44, PEER_GAP = 24;
+  const bars = [];
+  for (let i = 0; i < BARS; i++) {
+    const r = document.createElementNS(NS, 'rect');
+    r.setAttribute('class', 'bar');
+    r.setAttribute('fill', '#9E2B1A');
+    r.setAttribute('fill-opacity', '1');
+    r.setAttribute('width', '0');
+    r.setAttribute('height', '0');
+    g.appendChild(r);
+    bars.push({
+      el: r, horizontal: i % 2 === 0,
+      pos: 0, offset: 0, speed: 0, wait: 0,
+      pending: false, off: 0, span: 0, thick: 1.6, passWith: null, adv: 0, touch: true
+    });
+  }
+  // 每个方向 4 条中 3 条贴边、1 条悬空短线（整体 2/3 贴边、1/3 悬空）
+  [true, false].forEach(isH => {
+    bars.filter(b => b.horizontal === isH).forEach((b, m) => {
+      b.touch = m % 4 !== 3;
+    });
+  });
+  // 鼠标跟踪（换算到 viewBox 坐标）
+  let mouse = null, hover = false;
+  function toSvg(e) {
+    const rect = svg.getBoundingClientRect();
+    return {
+      x: (e.clientX - rect.left) / rect.width * 400,
+      y: (e.clientY - rect.top) / rect.height * 400
+    };
+  }
+  svg.addEventListener('mouseenter', e => { hover = true; mouse = toSvg(e); });
+  svg.addEventListener('mousemove', e => { mouse = toSvg(e); });
+  svg.addEventListener('mouseleave', () => { hover = false; mouse = null; });
+
+  // 生成一条新条纹：长条至少一端贴边框，短条两端悬空
+  function spawn(b) {
+    if (b.touch) {
+      const r = Math.random();
+      if (r < 0.3) {
+        // 两端都接边框
+        b.span = SIZE;
+        b.off = X0;
+      } else if (r < 0.65) {
+        // 一端接起边
+        b.span = SIZE * (0.4 + Math.random() * 0.6);
+        b.off = X0;
+      } else {
+        // 一端接终边
+        b.span = SIZE * (0.4 + Math.random() * 0.6);
+        b.off = X0 + SIZE - b.span;
+      }
+    } else {
+      // 短线条：两端都不接边框
+      b.span = SIZE * (0.15 + Math.random() * 0.35);
+      const margin = 24 + Math.random() * 40;
+      b.off = X0 + margin + Math.random() * (SIZE - b.span - margin * 2);
+    }
+    if (b.horizontal) {
+      b.el.setAttribute('x', b.off);
+      b.el.setAttribute('width', b.span);
+      b.el.setAttribute('height', b.thick);
+    } else {
+      b.el.setAttribute('y', b.off);
+      b.el.setAttribute('width', b.thick);
+      b.el.setAttribute('height', b.span);
+    }
+    b.pos = X0 - b.thick;
+    b.offset = 0;
+    b.speed = 18 + Math.random() * 40;
+    b.passWith = null;
+  }
+  // 初始分层铺开：同向按槽位错位分布，避免加载时贴叠
+  [true, false].forEach(isH => {
+    const group = bars.filter(b => b.horizontal === isH);
+    const slot = SIZE / group.length;
+    group.forEach((b, m) => {
+      spawn(b);
+      b.pos = X0 + (m + 0.3 + Math.random() * 0.4) * slot;
+      b.el.setAttribute(isH ? 'y' : 'x', b.pos.toFixed(1));
+    });
+  });
+
+  let last = performance.now();
+  const lastCross = { h: -1e9, v: -1e9 };
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+
+    // 悬停期间暂停重生（不生成新线条）
+    bars.forEach(b => {
+      if (b.pending && !hover) {
+        b.wait -= dt;
+        if (b.wait <= 0) { spawn(b); b.pending = false; }
+      }
+    });
+
+    // 每帧期望位移
+    bars.forEach(b => { b.adv = b.speed * dt; });
+
+    // 同向限距：只平滑减速跟进、位置永不回退；每个方向每 1 秒最多放行一次穿越
+    [['h', true], ['v', false]].forEach(([dir, isH]) => {
+      const group = bars.filter(b => !b.pending && b.horizontal === isH)
+        .sort((a, b) => a.pos - b.pos);
+      // 从最前一辆往后传播约束，保证队列级联也自然
+      for (let k = group.length - 1; k >= 1; k--) {
+        const lead = group[k], follow = group[k - 1];
+        // 固定轴跨度不重叠：视觉上不会重合，无需排队
+        const disjoint = lead.off > follow.off + follow.span || follow.off > lead.off + lead.span;
+        const paired = follow.passWith === lead && lead.passWith === follow;
+        if (disjoint || lead.pos - follow.pos >= PEER_GAP) {
+          if (paired) { follow.passWith = null; lead.passWith = null; }
+          continue;
+        }
+        if (paired) continue; // 放行穿越中，等它们自然分开
+        if (follow.speed > lead.speed) {
+          if (now - lastCross[dir] >= 1000) {
+            // 本秒额度未用：放行这一次穿越
+            lastCross[dir] = now;
+            follow.passWith = lead;
+            lead.passWith = follow;
+          } else {
+            // 名额未到：本帧最多前进到安全距离处（渐近减速，不倒退）
+            const room = Math.max(0, lead.pos + lead.adv - PEER_GAP - follow.pos);
+            follow.adv = Math.min(follow.adv, room);
+          }
+        }
+      }
+    });
+
+    // 推进 + 离场
+    bars.forEach(b => {
+      if (b.pending) return;
+      b.pos += b.adv;
+      if (b.pos > X0 + SIZE) {
+        b.pending = true;
+        b.wait = 0.2 + Math.random() * 1.8;
+        b.el.setAttribute('width', '0');
+        b.el.setAttribute('height', '0');
+      }
+    });
+
+    // 计算避让目标：鼠标避让 + 同向线条互斥（横线只沿 y 动，竖线只沿 x 动）
+    const desired = bars.map(() => 0);
+    for (let i = 0; i < bars.length; i++) {
+      const a = bars[i];
+      if (a.pending) continue;
+      const cur = a.pos + a.offset;
+      if (hover && mouse) {
+        // 鼠标落在条纹固定轴跨度附近才需要避让
+        const mOther = a.horizontal ? mouse.x : mouse.y;
+        if (mOther > a.off - MOUSE_R && mOther < a.off + a.span + MOUSE_R) {
+          const mCoord = a.horizontal ? mouse.y : mouse.x;
+          const d = cur - mCoord;
+          if (Math.abs(d) < MOUSE_R) {
+            const s = d === 0 ? 1 : Math.sign(d);
+            desired[i] += s * (MOUSE_R - Math.abs(d));
+          }
+        }
+      }
+      // 同向斥力：仅固定轴跨度重叠时，沿流动轴推开
+      for (let j = i + 1; j < bars.length; j++) {
+        const c = bars[j];
+        if (c.pending || c.horizontal !== a.horizontal) continue;
+        if (c.off > a.off + a.span || a.off > c.off + c.span) continue;
+        const d2 = (a.pos + a.offset) - (c.pos + c.offset);
+        if (Math.abs(d2) < PEER_GAP) {
+          const s = d2 === 0 ? 1 : Math.sign(d2);
+          const push = (PEER_GAP - Math.abs(d2)) / 2;
+          desired[i] += s * push;
+          desired[j] -= s * push;
+        }
+      }
+    }
+
+    // 平滑逼近避让目标，并夹在印面范围内
+    bars.forEach((b, i) => {
+      if (b.pending) return;
+      b.offset += (desired[i] - b.offset) * Math.min(1, dt * 6);
+      const v = Math.max(X0, Math.min(X0 + SIZE - b.thick, b.pos + b.offset));
+      b.el.setAttribute(b.horizontal ? 'y' : 'x', v.toFixed(1));
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ====== 纵向分节切换 ====== */
+const sectionsEl = document.getElementById('sections');
+const panels = sectionsEl.querySelectorAll('.panel');
+const totalPanels = panels.length;
+let current = 0;
+let lock = false;
+const desktopQuery = window.matchMedia('(min-width: 769px)');
+
+document.getElementById('totalIdx').textContent = String(totalPanels).padStart(2, '0');
+
+function goTo(i) {
+  if (!desktopQuery.matches) return;
+  current = Math.max(0, Math.min(totalPanels - 1, i));
+  sectionsEl.style.transform = `translateX(calc(-${current} * 100vw))`;
+  triggerReveal(current);
+  updateCounter();
+  updateScrollHint();
+}
+window.goTo = goTo;
+
+function updateCounter() {
+  document.getElementById('curIdx').textContent = String(current + 1).padStart(2, '0');
+}
+function updateScrollHint() {
+  const el = document.getElementById('scrollHint');
+  if (!el) return;
+  el.classList.toggle('show', current === 0);
+}
+
+function triggerReveal(idx) {
+  const els = panels[idx].querySelectorAll('[data-reveal]');
+  els.forEach(el => el.classList.remove('reveal-in'));
+  void panels[idx].offsetWidth;
+  els.forEach((el, i) => {
+    el.style.transitionDelay = (60 * i) + 'ms';
+    el.classList.add('reveal-in');
+  });
+  setTimeout(() => {
+    els.forEach(el => el.style.transitionDelay = '');
+  }, els.length * 60 + 700);
+}
+
+window.addEventListener('wheel', (e) => {
+  if (!desktopQuery.matches) return;
+  e.preventDefault();
+  if (lock) return;
+  lock = true;
+  setTimeout(() => { lock = false; }, 820);
+  if (e.deltaY > 20) goTo(current + 1);
+  else if (e.deltaY < -20) goTo(current - 1);
+}, { passive: false });
+
+window.addEventListener('keydown', (e) => {
+  if (!desktopQuery.matches) return;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+    e.preventDefault(); goTo(current + 1);
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault(); goTo(current - 1);
+  }
+  if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+  if (e.key === 'End') { e.preventDefault(); goTo(totalPanels - 1); }
+});
+
+let touchStartY = 0;
+window.addEventListener('touchstart', (e) => {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+window.addEventListener('touchend', (e) => {
+  if (!desktopQuery.matches) return;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dy) > 60) {
+    if (dy < 0) goTo(current + 1);
+    else goTo(current - 1);
+  }
+});
+</script>
+</body>
+</html>
